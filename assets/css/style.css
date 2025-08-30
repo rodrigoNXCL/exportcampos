@@ -1,0 +1,379 @@
+/* Paleta de colores - Inspirada en la elegancia del nuevo logo */
+:root {
+    --primary-color: #31553a;
+    --secondary-color: #f57e20; /* Naranja del logo */
+    --tertiary-color: #5ab651;  /* Verde del logo */
+    --text-color: #333;
+    --light-color: #f7f7f7;
+    --white-color: #fff;
+}
+
+/* Estilos Generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    background-color: var(--white-color);
+    padding-top: 90px; /* **Ajuste el relleno superior para evitar que el logo tape el contenido** */
+}
+
+/* Encabezado y Navegación */
+.navbar {
+    background-color: var(--white-color) !important;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Ajustes para el contenedor del logo */
+.navbar-brand {
+    position: relative;
+    height: 120px; /* Tamaño del contenedor, ajusta según sea necesario */
+    width: auto;
+    margin-right: 50px;
+   
+}
+
+/* Ajustes para la imagen del logo */
+.logo-image-static {
+    position: absolute;
+    top: 10%
+    left: 0;
+    height: 200px;
+    width: auto;
+    transition: transform 0.3s ease;
+    transform-origin: bottom; /* **Añade esta línea** */
+}
+
+/* Efecto de resalte al pasar el mouse */
+.logo-image-static:hover {
+    transform: scale(1.1); /* El logo se agranda solo desde abajo */
+}
+
+/* Estilos del Menú con efecto de crayón */
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-right: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--secondary-color) !important;
+}
+
+/* Animación de la línea tipo crayón */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 100%;
+    height: 5px; /* Línea más gruesa para el efecto crayón */
+    background-color: var(--tertiary-color);
+    border-radius: 5px; /* Bordes redondeados para simular un trazo */
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+/* El enlace activo tendrá una línea de otro color */
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    transform: scaleX(1);
+}
+
+/* Carrusel y Sección Hero */
+.carousel-item img {
+    height: 550px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.carousel-caption h2 {
+    color: var(--white-color);
+    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+}
+
+.carousel-caption p {
+    color: var(--white-color);
+    font-size: 1.2rem;
+}
+
+/* Botón de WhatsApp */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    transition: transform 0.2s;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Ajuste para que los anclajes no queden ocultos por el navbar fijo */
+html {
+    scroll-padding-top: 100px; /* Ajusta este valor al tamaño de tu barra de navegación */
+}
+
+/* Ajustes para dispositivos móviles - Media Query */
+@media (max-width: 768px) {
+
+    /* El cuerpo no necesita tanto espacio arriba en móviles */
+    body {
+        padding-top: 60px;
+    }
+
+    /* La barra de navegación se hace más delgada */
+    .navbar {
+        height: 60px;
+    }
+
+    /* El contenedor del logo se adapta al nuevo tamaño de la barra de navegación */
+    .navbar-brand {
+        height: 60px;
+        margin-right: 0;
+    }
+
+    /* El logo se hace mucho más pequeño para caber en la pantalla */
+    .logo-image-static {
+        height: 60px;
+        position: static;
+        top: auto;
+        transform: none;
+        left: auto;
+    }
+    
+    /* El menú de navegación se ve mejor en columna */
+    .navbar-collapse {
+        background-color: var(--white-color);
+    }
+    
+    /* El efecto de línea del menú se ajusta al nuevo tamaño */
+    .nav-link::after,
+    .nav-link.active::after {
+        bottom: 5px;
+    }
+
+    /* El carrusel se adapta para no verse cortado */
+    .carousel-item img {
+        height: 300px; /* Altura más adecuada para móviles */
+    }
+
+    /* Los títulos y texto del carrusel se hacen más pequeños */
+    .carousel-caption h2 {
+        font-size: 1.5rem;
+    }
+
+    .carousel-caption p {
+        font-size: 0.9rem;
+    }
+html {
+        scroll-padding-top: 60px; /* Un valor más pequeño para móviles */
+    }
+}
+/* Estilo del contenedor principal del modal */
+.modal-content {
+    border-radius: 1rem; /* Bordes redondeados */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Sombra suave para darle profundidad */
+    border: none;
+}
+
+/* Estilo del encabezado del modal */
+.modal-header {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+/* Estilo del título del modal */
+.modal-title {
+    font-weight: 600;
+}
+
+/* Estilo del botón de cierre del modal */
+.modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%); /* Hace el botón blanco */
+    opacity: 0.8;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+/* Estilo del cuerpo del modal */
+.modal-body {
+    background-color: var(--white-color);
+    padding: 2rem 1.5rem;
+}
+
+/* Estilo de los elementos de la lista de contacto */
+.list-group-item {
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+}
+
+.list-group-item:hover {
+    background-color: var(--light-color);
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+    border-color: var(--secondary-color);
+}
+/* Estilo para las líneas divisorias */
+.navbar .lines-divider {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 130%; 
+    height: 12px;
+}
+.line {
+    width: 100%;
+    height: 2px;
+    margin: 1px 0;
+}
+
+.line-1 {
+    background-color: var(--tertiary-color);
+}
+
+.line-2 {
+    background-color: var(--secondary-color);
+}
+
+/* Estilos para el contenedor central, ahora más específico */
+.navbar .center-nav-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex-grow: 1; 
+    margin: 0 4rem;
+}
+/* Estilo de la información de contacto (en una sola línea) */
+/* Estilo de la información de contacto */
+.navbar .contact-info {
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    line-height: 0.8;
+    font-weight: 500;
+    margin-bottom: 1px;
+}
+.navbar .contact-info a {
+  color: inherit; /* Hereda el color del padre para que no sea azul */
+  text-decoration: none;
+}
+/* Asegura que el contenedor de la barra de navegación use Flexbox */
+.navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.navbar.contact-info a:hover,
+.navbar.contact-info a:focus {
+    color: var(--secondary-color); /* O un color que elijas al pasar el mouse por encima */
+    text-decoration: none;
+}
+/* Estilos para la línea delgada en la parte superior de la página */
+.top-line {
+    width: 100%;
+    height: 4px; /* O el grosor que prefieras */
+    background-color: var(--tertiary-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050; /* Asegura que la línea esté por encima de otros elementos */
+}
+/* Estilos para los íconos de contacto y el texto */
+.contact-details li {
+    margin-bottom: 0.25rem;
+}
+
+.contact-details i {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+}
+
+.contact-details a {
+    text-decoration: none;
+    color: inherit;
+}
+/* Estilos para el mapa */
+.map-responsive iframe {
+    height: 350px; /* Tamaño más compacto para el mapa */
+}
+/* Estilos para la tarjeta del producto */
+.product-card {
+    background-color: var(--white-color);
+    padding: 2rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden; 
+}
+
+/* Efecto al pasar el cursor sobre la tarjeta */
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+/* Estilos para la imagen dentro de la tarjeta */
+.product-card img {
+    height: 200px; /* **Aumenta la altura de la imagen para que la tarjeta se vea más grande** */
+    object-fit: contain;
+    transition: transform 0.4s ease;
+    display: block;
+    margin: 0 auto 1rem auto;
+}
+/* Efecto de ampliación en la imagen al pasar el cursor sobre la tarjeta */
+.product-card:hover img {
+    transform: scale(1.1);
+}
+
+.product-card h3 {
+    margin-top: 1rem;
+    color: var(--primary-color);
+}
+/* Estilos para el nuevo contenedor de banderas */
+.language-flags {
+    text-align: right;
+    width: 100%;
+}
+
+/* Estilos para el contenedor de la información de contacto */
+.contact-info-and-lines {
+    width: 100%;
+}
