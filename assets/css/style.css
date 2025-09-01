@@ -1,8 +1,10 @@
+/* assets/css/style.css */
+
 /* Paleta de colores - Inspirada en la elegancia del nuevo logo */
 :root {
     --primary-color: #31553a;
-    --secondary-color: #f57e20; /* Naranja del logo */
-    --tertiary-color: #5ab651;  /* Verde del logo */
+    --secondary-color: #f57e20;
+    --tertiary-color: #5ab651;
     --text-color: #333;
     --light-color: #f7f7f7;
     --white-color: #fff;
@@ -13,7 +15,44 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-color);
     background-color: var(--white-color);
-    padding-top: 90px; /* **Ajuste el relleno superior para evitar que el logo tape el contenido** */
+    padding-top: 130px;
+    line-height: 1.6;
+}
+
+/* Línea superior con gradiente de colores */
+.top-line {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--tertiary-color) 0%, var(--secondary-color) 50%, var(--primary-color) 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+}
+
+/* Selector de idioma en esquina superior derecha */
+.language-selector-top {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 1060;
+}
+
+.lang-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.lang-link:hover, .lang-link.active {
+    color: var(--secondary-color);
+}
+
+.lang-separator {
+    color: var(--primary-color);
+    margin: 0 5px;
 }
 
 /* Encabezado y Navegación */
@@ -21,44 +60,97 @@ body {
     background-color: var(--white-color) !important;
     border-bottom: 1px solid #ddd;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 0.5rem 0;
 }
 
-/* Ajustes para el contenedor del logo */
+.navbar-top-content {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Logo optimizado */
 .navbar-brand {
-    position: relative;
-    height: 120px; /* Tamaño del contenedor, ajusta según sea necesario */
+    height: 120px;
     width: auto;
-    margin-right: 50px;
-   
+    margin-right: 20px;
+    position: relative;
+    z-index: 1040;
 }
 
-/* Ajustes para la imagen del logo */
 .logo-image-static {
-    position: absolute;
-    top: 10%
-    left: 0;
-    height: 200px;
+    height: 120px;
     width: auto;
     transition: transform 0.3s ease;
-    transform-origin: bottom; /* **Añade esta línea** */
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-/* Efecto de resalte al pasar el mouse */
 .logo-image-static:hover {
-    transform: scale(1.1); /* El logo se agranda solo desde abajo */
+    transform: scale(1.05);
 }
 
-/* Estilos del Menú con efecto de crayón */
+/* Información de contacto en navbar - MÁS A LA IZQUIERDA */
+.center-nav-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 15px;
+    position: relative;
+    z-index: 1030;
+}
+
+.contact-info {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    line-height: 1.2;
+    font-weight: 500;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.contact-info a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+    color: var(--secondary-color);
+}
+
+/* LÍNEA SUTIL */
+.lines-divider {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.line {
+    width: 80%;
+    height: 1px;
+    background-color: var(--tertiary-color);
+    margin-top: 5px;
+    opacity: 0.7;
+}
+
+/* Menú de navegación */
+.navbar-nav {
+    align-items: center;
+}
+
 .nav-item {
     position: relative;
+    margin: 0 0.5rem;
 }
 
 .nav-link {
     color: var(--primary-color) !important;
     font-weight: 600;
     font-size: 1.1rem;
-    margin-right: 1.5rem;
     transition: all 0.3s ease;
+    padding: 0.5rem 1rem !important;
 }
 
 .nav-link:hover {
@@ -69,12 +161,12 @@ body {
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: -15px;
+    bottom: -5px;
     left: 0;
     width: 100%;
-    height: 5px; /* Línea más gruesa para el efecto crayón */
+    height: 3px;
     background-color: var(--tertiary-color);
-    border-radius: 5px; /* Bordes redondeados para simular un trazo */
+    border-radius: 2px;
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
@@ -83,20 +175,12 @@ body {
     transform: scaleX(1);
 }
 
-/* El enlace activo tendrá una línea de otro color */
 .nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background-color: var(--secondary-color);
-    border-radius: 5px;
     transform: scaleX(1);
+    background-color: var(--secondary-color);
 }
 
-/* Carrusel y Sección Hero */
+/* Carrusel */
 .carousel-item img {
     height: 550px;
     width: 100%;
@@ -121,88 +205,185 @@ body {
     font-size: 1.2rem;
 }
 
-/* Botón de WhatsApp */
-.whatsapp-btn {
+/* Sección Quiénes Somos - Texto uniforme */
+#quienes-somos {
+    padding: 5rem 0;
+}
+
+#quienes-somos h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+#quienes-somos .lead {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+#quienes-somos img {
+    max-width: 100%;
+    border: 5px solid var(--white-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Productos Section */
+#productos {
+    padding: 5rem 0;
+    background-color: var(--light-color);
+}
+
+#productos h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+#productos .lead {
+    color: var(--text-color);
+    margin-bottom: 3rem;
+}
+
+/* Estilos para la tarjeta del producto */
+.product-card {
+    background-color: var(--white-color);
+    padding: 2rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.product-card img {
+    height: 200px;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+    display: block;
+    margin: 0 auto 1rem auto;
+}
+
+.product-card:hover img {
+    transform: scale(1.1);
+}
+
+.product-card h3 {
+    margin-top: 1rem;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+/* Contacto Section */
+#contacto {
+    padding: 5rem 0;
+}
+
+#contacto h2 {
+    color: var(--primary-color);
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+#contacto .lead {
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+.contact-details li {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.contact-details i {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    width: 24px;
+}
+
+.contact-details a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.contact-details a:hover {
+    color: var(--secondary-color);
+}
+
+/* Botón elegante para formulario de contacto */
+.btn-elegant {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--tertiary-color) 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-elegant:hover {
+    background: linear-gradient(135deg, var(--tertiary-color) 0%, var(--primary-color) 100%);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Mapa */
+.map-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.map-container iframe {
+    height: 350px;
+    width: 100%;
+}
+
+/* BOTÓN FLOTANTE DE WHATSAPP */
+.whatsapp-float {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 25px;
+    right: 25px;
     z-index: 1000;
     transition: transform 0.2s;
 }
 
-.whatsapp-btn:hover {
+.whatsapp-float:hover {
     transform: scale(1.1);
 }
 
-/* Ajuste para que los anclajes no queden ocultos por el navbar fijo */
-html {
-    scroll-padding-top: 100px; /* Ajusta este valor al tamaño de tu barra de navegación */
+.whatsapp-float a {
+    display: block;
+    width: 60px;
+    height: 60px;
 }
 
-/* Ajustes para dispositivos móviles - Media Query */
-@media (max-width: 768px) {
-
-    /* El cuerpo no necesita tanto espacio arriba en móviles */
-    body {
-        padding-top: 60px;
-    }
-
-    /* La barra de navegación se hace más delgada */
-    .navbar {
-        height: 60px;
-    }
-
-    /* El contenedor del logo se adapta al nuevo tamaño de la barra de navegación */
-    .navbar-brand {
-        height: 60px;
-        margin-right: 0;
-    }
-
-    /* El logo se hace mucho más pequeño para caber en la pantalla */
-    .logo-image-static {
-        height: 60px;
-        position: static;
-        top: auto;
-        transform: none;
-        left: auto;
-    }
-    
-    /* El menú de navegación se ve mejor en columna */
-    .navbar-collapse {
-        background-color: var(--white-color);
-    }
-    
-    /* El efecto de línea del menú se ajusta al nuevo tamaño */
-    .nav-link::after,
-    .nav-link.active::after {
-        bottom: 5px;
-    }
-
-    /* El carrusel se adapta para no verse cortado */
-    .carousel-item img {
-        height: 300px; /* Altura más adecuada para móviles */
-    }
-
-    /* Los títulos y texto del carrusel se hacen más pequeños */
-    .carousel-caption h2 {
-        font-size: 1.5rem;
-    }
-
-    .carousel-caption p {
-        font-size: 0.9rem;
-    }
-html {
-        scroll-padding-top: 60px; /* Un valor más pequeño para móviles */
-    }
+.whatsapp-float img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-/* Estilo del contenedor principal del modal */
+
+/* MODAL DE WHATSAPP */
 .modal-content {
-    border-radius: 1rem; /* Bordes redondeados */
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Sombra suave para darle profundidad */
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     border: none;
 }
 
-/* Estilo del encabezado del modal */
 .modal-header {
     background-color: var(--primary-color);
     color: var(--white-color);
@@ -212,14 +393,12 @@ html {
     padding: 1.5rem;
 }
 
-/* Estilo del título del modal */
 .modal-title {
     font-weight: 600;
 }
 
-/* Estilo del botón de cierre del modal */
 .modal-header .btn-close {
-    filter: invert(1) grayscale(100%) brightness(200%); /* Hace el botón blanco */
+    filter: invert(1) grayscale(100%) brightness(200%);
     opacity: 0.8;
 }
 
@@ -227,13 +406,11 @@ html {
     opacity: 1;
 }
 
-/* Estilo del cuerpo del modal */
 .modal-body {
     background-color: var(--white-color);
     padding: 2rem 1.5rem;
 }
 
-/* Estilo de los elementos de la lista de contacto */
 .list-group-item {
     border-radius: 0.5rem;
     margin-bottom: 0.5rem;
@@ -249,131 +426,96 @@ html {
     transform: translateY(-2px);
     border-color: var(--secondary-color);
 }
-/* Estilo para las líneas divisorias */
-.navbar .lines-divider {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    width: 130%; 
-    height: 12px;
-}
-.line {
-    width: 100%;
-    height: 2px;
-    margin: 1px 0;
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 2rem 0;
 }
 
-.line-1 {
-    background-color: var(--tertiary-color);
+footer p {
+    margin: 0;
+    color: var(--white-color);
 }
 
-.line-2 {
-    background-color: var(--secondary-color);
+/* Ajuste para scroll */
+html {
+    scroll-padding-top: 130px;
 }
 
-/* Estilos para el contenedor central, ahora más específico */
-.navbar .center-nav-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    flex-grow: 1; 
-    margin: 0 4rem;
-}
-/* Estilo de la información de contacto (en una sola línea) */
-/* Estilo de la información de contacto */
-.navbar .contact-info {
-    font-size: 0.8rem;
-    color: var(--primary-color);
-    line-height: 0.8;
-    font-weight: 500;
-    margin-bottom: 1px;
-}
-.navbar .contact-info a {
-  color: inherit; /* Hereda el color del padre para que no sea azul */
-  text-decoration: none;
-}
-/* Asegura que el contenedor de la barra de navegación use Flexbox */
-.navbar .container-fluid {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.navbar.contact-info a:hover,
-.navbar.contact-info a:focus {
-    color: var(--secondary-color); /* O un color que elijas al pasar el mouse por encima */
-    text-decoration: none;
-}
-/* Estilos para la línea delgada en la parte superior de la página */
-.top-line {
-    width: 100%;
-    height: 4px; /* O el grosor que prefieras */
-    background-color: var(--tertiary-color);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1050; /* Asegura que la línea esté por encima de otros elementos */
-}
-/* Estilos para los íconos de contacto y el texto */
-.contact-details li {
-    margin-bottom: 0.25rem;
-}
-
-.contact-details i {
-    font-size: 1.2rem;
-    color: var(--secondary-color);
-}
-
-.contact-details a {
-    text-decoration: none;
-    color: inherit;
-}
-/* Estilos para el mapa */
-.map-responsive iframe {
-    height: 350px; /* Tamaño más compacto para el mapa */
-}
-/* Estilos para la tarjeta del producto */
-.product-card {
-    background-color: var(--white-color);
-    padding: 2rem 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden; 
-}
-
-/* Efecto al pasar el cursor sobre la tarjeta */
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
-}
-
-/* Estilos para la imagen dentro de la tarjeta */
-.product-card img {
-    height: 200px; /* **Aumenta la altura de la imagen para que la tarjeta se vea más grande** */
-    object-fit: contain;
-    transition: transform 0.4s ease;
-    display: block;
-    margin: 0 auto 1rem auto;
-}
-/* Efecto de ampliación en la imagen al pasar el cursor sobre la tarjeta */
-.product-card:hover img {
-    transform: scale(1.1);
-}
-
-.product-card h3 {
-    margin-top: 1rem;
-    color: var(--primary-color);
-}
-/* Estilos para el nuevo contenedor de banderas */
-.language-flags {
-    text-align: right;
-    width: 100%;
-}
-
-/* Estilos para el contenedor de la información de contacto */
-.contact-info-and-lines {
-    width: 100%;
+/* Ajustes para dispositivos móviles */
+@media (max-width: 992px) {
+    body {
+        padding-top: 100px;
+    }
+    
+    .language-selector-top {
+        top: 10px;
+        right: 15px;
+    }
+    
+    .navbar-top-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .navbar-brand {
+        height: 80px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .logo-image-static {
+        height: 80px;
+    }
+    
+    .center-nav-content {
+        display: none;
+    }
+    
+    .navbar-collapse {
+        background-color: var(--white-color);
+        padding: 1rem;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-item {
+        margin: 0;
+    }
+    
+    .nav-link {
+        padding: 0.75rem 0 !important;
+    }
+    
+    .nav-link::after {
+        bottom: 0;
+    }
+    
+    .carousel-item img {
+        height: 300px;
+    }
+    
+    .carousel-caption h2 {
+        font-size: 1.5rem;
+    }
+    
+    .carousel-caption p {
+        font-size: 0.9rem;
+    }
+    
+    html {
+        scroll-padding-top: 100px;
+    }
+    
+    .whatsapp-float {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .whatsapp-float a {
+        width: 50px;
+        height: 50px;
+    }
 }
