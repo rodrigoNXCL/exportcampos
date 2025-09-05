@@ -427,7 +427,7 @@ body {
     border-color: var(--secondary-color);
 }
 
-/* Footer */
+/* Footer Estandarizado */
 footer {
     background-color: var(--primary-color);
     color: var(--white-color);
@@ -437,6 +437,17 @@ footer {
 footer p {
     margin: 0;
     color: var(--white-color);
+}
+
+.footer-link {
+    color: var(--white-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
 }
 
 /* Ajuste para scroll */
