@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Productos - ExportCampos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/products.css">
+</head>
+<body>
+    <div class="top-line"></div>
+    
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <div class="container-fluid">
+                <!-- Selector de idioma en esquina superior derecha -->
+                <div class="language-selector-top">
+                    <a href="#" class="lang-link active">ES</a>
+                    <span class="lang-separator">|</span>
+                    <a href="#" class="lang-link">EN</a>
+                </div>
+
+                <div class="d-flex align-items-center navbar-top-content">
+                    <a class="navbar-brand" href="../index.html">
+                        <img src="../assets/img/tu-logo_6.png" alt="ExportCampos - Expertos en productos congelados" class="logo-image-static">
+                    </a>
+                    
+                    <div class="center-nav-content d-none d-lg-flex">
+                        <div class="contact-info">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#whatsappModal">
+                                <i class="bi bi-telephone-fill"></i> +56 9 12345678
+                            </a>&nbsp; | &nbsp;
+                            <a href="../index.html#contacto">
+                                <i class="bi bi-envelope-fill"></i> info@exportcampos.cl
+                            </a>
+                        </div>
+                        <div class="lines-divider">
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html">Inicio</a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Quiénes Somos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="../index.html#quienes-somos">Historia</a></li>
+                                <li><a class="dropdown-item" href="../index.html#organigrama">Organigrama</a></li>
+                                <li><a class="dropdown-item" href="../index.html#instalaciones">Instalaciones</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Productos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="../index.html#productos">Nuestros Congelados</a></li>
+                                <li><a class="dropdown-item active" href="products.html">Detalle de Nuestros Productos</a></li>
+                                <li><a class="dropdown-item" href="empaques.html">Nuestros Empaques</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html#contacto">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="products-hero">
+            <div class="container">
+                <h1 class="display-4 fw-bold">Nuestros Productos</h1>
+                <p class="lead">Calidad premium en cada producto congelado que exportamos</p>
+            </div>
+        </section>
+
+        <!-- Filtros de Productos -->
+        <section class="py-5">
+            <div class="container">
+                <div class="product-filters">
+                    <h3 class="filter-title">Filtrar por categoría:</h3>
+                    <div class="d-flex flex-wrap">
+                        <button class="btn btn-outline-primary filter-btn active">Todos</button>
+                        <button class="btn btn-outline-primary filter-btn">Frutillas</button>
+                        <button class="btn btn-outline-primary filter-btn">Arándanos</button>
+                        <button class="btn btn-outline-primary filter-btn">Frambuesas</button>
+                        <button class="btn btn-outline-primary filter-btn">Moras</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Productos Section -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <!-- Producto 1: Frutillas -->
+                    <div class="col-lg-6 mb-5">
+                        <div class="product-detail-card">
+                            <img src="../assets/img/FrutillaSlice_ficha.png" alt="Frutilla Slice Congelada" class="product-image">
+                            <div class="product-body">
+                                <h3 class="product-title">Frutillas Slice 12 mm</h3>
+                                <p class="lead">Nuestras frutillas son seleccionadas en su punto óptimo de maduración, congeladas mediante tecnología IQF para preservar su sabor, textura y valor nutricional.</p>
+                                
+                                <div class="product-features">
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Proceso de congelado IQF (Individual Quick Frozen)</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Origen: Chile</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Disponible en cortes: Slice 12 mm</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Embalaje: Bolsa Polietileno Azul (30 lbs)</span>
+                                    </div>
+                                </div>
+
+                                <h5>Especificaciones Técnicas:</h5>
+                                <table class="specs-table">
+                                    <tr>
+                                        <th>Parámetro</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Tamaño</td>
+                                        <td>2-3 cm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color</td>
+                                        <td>Rojo intenso uniforme</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vida útil</td>
+                                        <td>24 meses a -18°C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Certificaciones</td>
+                                        <td>HACCP, BRC, FDA</td>
+                                    </tr>
+                                </table>
+
+                                <a href="../assets/pdf/Frutilla_Slice_FT.pdf" target="_blank" class="download-btn">
+                                    <i class="bi bi-download me-2"></i> Descargar Ficha Técnica
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 2: Frambuesa Entera -->
+                    <div class="col-lg-6 mb-5">
+                        <div class="product-detail-card">
+                            <img src="../assets/img/Frambuesa_ficha.png" alt="Frambuesa Entera" class="product-image">
+                            <div class="product-body">
+                                <h3 class="product-title">Frambuesa Entera Congelada</h3>
+                                <p class="lead">Frambuesas recolectadas en su óptimo grado de madurez, frescas, limpias y sanas de color rojo intenso.</p>
+                                
+                                <div class="product-features">
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Alto contenido de antioxidantes naturales</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Origen: Chile</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Variedad: : Heritage, Meeker y otras variedades</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Embalaje: 4 x 2,5 kg / 1 x 10 kg (10 k)</span>
+                                    </div>
+                                </div>
+
+                                <h5>Especificaciones Técnicas:</h5>
+                                <table class="specs-table">
+                                    <tr>
+                                        <th>Parámetro</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Calibre</td>
+                                        <td>12-14 mm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color</td>
+                                        <td>Rojo intenso uniforme</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Brix</td>
+                                        <td>Mínimo 10°</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Certificaciones</td>
+                                        <td>HACCP, BRC, FDA, GlobalG.A.P.</td>
+                                    </tr>
+                                </table>
+
+                                <a href="../assets/pdf/Frambuesa_Entera_FT.pdf" target="_blank" class="download-btn">
+                                    <i class="bi bi-download me-2"></i> Descargar Ficha Técnica
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 3: Frambuesas Crumble-->
+                    <div class="col-lg-6 mb-5">
+                        <div class="product-detail-card">
+                            <img src="../assets/img/FrambuesaCrumble_ficha.png" alt="Frambuesa Crumble Congelada" class="product-image">
+                            <div class="product-body">
+                                <h3 class="product-title">Frambuesas Crumble Congeladas</h3>
+                                <p class="lead">Frambuesas de color rojo intenso, procesadas específicamente para obtener fragmentos y granillo de frambuesa.</p>
+                                
+                                <div class="product-features">
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Proceso de congelado en menos de 4 horas post-cosecha</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Origen: Chile</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Variedad: Heritage, Chilliwack, Meeker</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Embalaje: Caja 1 x 14 kg</span>
+                                    </div>
+                                </div>
+
+                                <h5>Especificaciones Técnicas:</h5>
+                                <table class="specs-table">
+                                    <tr>
+                                        <th>Parámetro</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Tamaño</td>
+                                        <td>Granulos (drupas)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color</td>
+                                        <td>Rojo rubí intenso</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acidez</td>
+                                        <td>1.5-2.5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Certificaciones</td>
+                                        <td>HACCP, BRC, FDA, Kosher</td>
+                                    </tr>
+                                </table>
+
+                                <a href="../assets/pdf/Frambuesa_Crumble_FT.pdf" target="_blank" class="download-btn">
+                                    <i class="bi bi-download me-2"></i> Descargar Ficha Técnica
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 4: Moras -->
+                    <div class="col-lg-6 mb-5">
+                        <div class="product-detail-card">
+                            <img src="../assets/img/Mora_ficha.png" alt="Mora Congelada de exportación" class="product-image">
+                            <div class="product-body">
+                                <h3 class="product-title">Moras Cultivada Entera</h3>
+                                <p class="lead">Moras cultivadas en las mejores condiciones, con un equilibrio perfecto entre dulzura y acidez, ideales para repostería y elaboración de jugos.</p>
+                                
+                                <div class="product-features">
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Alto contenido de vitamina C y fibra</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Origen: Chile</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Variedad: Cherokee, Navajo y otras variedades </span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="bi bi-check-circle-fill feature-icon"></i>
+                                        <span>Embalaje: Bolsa Block Azul 12.8 kg</span>
+                                    </div>
+                                </div>
+
+                                <h5>Especificaciones Técnicas:</h5>
+                                <table class="specs-table">
+                                    <tr>
+                                        <th>Parámetro</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Tamaño</td>
+                                        <td>18-22 mm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color</td>
+                                        <td>Negro brillante uniforme</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Brix</td>
+                                        <td>Mínimo 12°</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Certificaciones</td>
+                                        <td>HACCP, BRC, FDA, Organic (opcional)</td>
+                                    </tr>
+                                </table>
+
+                                <a href="../assets/pdf/Mora_Cultivada_FT.pdf" target="_blank" class="download-btn">
+                                    <i class="bi bi-download me-2"></i> Descargar Ficha Técnica
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Estandarizado -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 <a href="https://nxchile.com" target="_blank" class="footer-link">nxchile</a> para ExportCampos. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botón flotante de WhatsApp -->
+    <div class="whatsapp-float">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#whatsappModal">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="60" height="60">
+        </a>
+    </div>
+    
+    <!-- Modal de WhatsApp -->
+    <div class="modal fade" id="whatsappModal" tabindex="-1" aria-labelledby="whatsappModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="whatsappModalLabel">Contactar por WhatsApp</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Seleccione el motivo de su contacto:</p>
+                    <div class="list-group">
+                        <a href="https://wa.me/56912345678?text=Hola,%20quisiera%20saber%20sobre%20cotizaciones%20de%20productos." target="_blank" class="list-group-item list-group-item-action">Cotizaciones de Productos</a>
+                        <a href="https://wa.me/56912345678?text=Hola,%20mi%20consulta%20es%20de%20tipo%20comercial." target="_blank" class="list-group-item list-group-item-action">Consulta Comercial</a>
+                        <a href="https://wa.me/56912345678?text=Hola,%20mi%20contacto%20es%20para%20pago%20a%20proveedores." target="_blank" class="list-group-item list-group-item-action">Pago a Proveedores</a>
+                        <a href="https://wa.me/56912345678?text=Hola,%20mi%20contacto%20es%20por%20otro%20motivo." target="_blank" class="list-group-item list-group-item-action">Otro Motivo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Funcionalidad básica para los filtros
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remover clase active de todos los botones
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Agregar clase active al botón clickeado
+                    this.classList.add('active');
+                    
+                    // Aquí iría la lógica para filtrar los productos
+                    // Por simplicidad, no se implementa en este ejemplo
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+/* assets/css/products.css - Estilos específicos para la página de productos */
+
+.products-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/imagen-hero-prod_1.png');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.product-detail-card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 30px;
+    background: white;
+    height: 100%;
+}
+
+.product-detail-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+    height: 300px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.product-body {
+    padding: 25px;
+}
+
+.product-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 10px;
+}
+
+.product-features {
+    margin: 20px 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.feature-icon {
+    color: var(--tertiary-color);
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.download-btn {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--tertiary-color) 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.download-btn:hover {
+    background: linear-gradient(135deg, var(--tertiary-color) 0%, var(--primary-color) 100%);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.specs-table th, .specs-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.specs-table th {
+    background-color: var(--light-color);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Filtros de Productos */
+.product-filters {
+    background-color: var(--light-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.filter-title {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.filter-btn {
+    margin: 5px;
+    border-radius: 20px;
+}
+
+/* Responsive para página de productos */
+@media (max-width: 992px) {
+    .product-image {
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .products-hero {
+        padding: 70px 0;
+    }
+    
+    .product-body {
+        padding: 20px;
+    }
+}

@@ -1,6 +1,5 @@
-/* assets/css/style.css */
+/* assets/css/style.css - Versión Optimizada */
 
-/* Paleta de colores - Inspirada en la elegancia del nuevo logo */
 :root {
     --primary-color: #31553a;
     --secondary-color: #f57e20;
@@ -19,7 +18,7 @@ body {
     line-height: 1.6;
 }
 
-/* Línea superior con gradiente de colores */
+/* Línea superior */
 .top-line {
     width: 100%;
     height: 4px;
@@ -30,7 +29,7 @@ body {
     z-index: 1050;
 }
 
-/* Selector de idioma en esquina superior derecha */
+/* Selector de idioma */
 .language-selector-top {
     position: absolute;
     top: 15px;
@@ -55,7 +54,7 @@ body {
     margin: 0 5px;
 }
 
-/* Encabezado y Navegación */
+/* Encabezado y Navegación - OPTIMIZADO */
 .navbar {
     background-color: var(--white-color) !important;
     border-bottom: 1px solid #ddd;
@@ -70,7 +69,7 @@ body {
     align-items: center;
 }
 
-/* Logo optimizado */
+/* Logo */
 .navbar-brand {
     height: 120px;
     width: auto;
@@ -90,7 +89,7 @@ body {
     transform: scale(1.05);
 }
 
-/* Información de contacto en navbar - MÁS A LA IZQUIERDA */
+/* Información de contacto */
 .center-nav-content {
     display: flex;
     flex-direction: column;
@@ -120,7 +119,7 @@ body {
     color: var(--secondary-color);
 }
 
-/* LÍNEA SUTIL */
+/* Línea divisoria */
 .lines-divider {
     display: flex;
     justify-content: flex-start;
@@ -157,7 +156,7 @@ body {
     color: var(--secondary-color) !important;
 }
 
-/* Animación de la línea tipo crayón */
+/* Animación de la línea */
 .nav-link::after {
     content: '';
     position: absolute;
@@ -205,7 +204,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* Sección Quiénes Somos - Texto uniforme */
+/* Sección Quiénes Somos */
 #quienes-somos {
     padding: 5rem 0;
 }
@@ -247,7 +246,7 @@ body {
     margin-bottom: 3rem;
 }
 
-/* Estilos para la tarjeta del producto */
+/* Tarjetas de producto */
 .product-card {
     background-color: var(--white-color);
     padding: 2rem 1.5rem;
@@ -320,7 +319,7 @@ body {
     color: var(--secondary-color);
 }
 
-/* Botón elegante para formulario de contacto */
+/* Botón elegante */
 .btn-elegant {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--tertiary-color) 100%);
     color: white;
@@ -351,7 +350,7 @@ body {
     width: 100%;
 }
 
-/* BOTÓN FLOTANTE DE WHATSAPP */
+/* Botón flotante de WhatsApp */
 .whatsapp-float {
     position: fixed;
     bottom: 25px;
@@ -377,7 +376,7 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* MODAL DE WHATSAPP */
+/* Modal de WhatsApp */
 .modal-content {
     border-radius: 1rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
@@ -427,7 +426,7 @@ body {
     border-color: var(--secondary-color);
 }
 
-/* Footer Estandarizado */
+/* Footer */
 footer {
     background-color: var(--primary-color);
     color: var(--white-color);
@@ -455,7 +454,19 @@ html {
     scroll-padding-top: 130px;
 }
 
-/* Ajustes para dispositivos móviles */
+/* Mejoras en responsive */
+@media (max-width: 1200px) {
+    .navbar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-item {
+        margin: 0 0.3rem;
+    }
+}
+
 @media (max-width: 992px) {
     body {
         padding-top: 100px;
@@ -508,6 +519,10 @@ html {
         height: 300px;
     }
     
+    .carousel-caption {
+        padding: 15px;
+    }
+    
     .carousel-caption h2 {
         font-size: 1.5rem;
     }
@@ -528,5 +543,57 @@ html {
     .whatsapp-float a {
         width: 50px;
         height: 50px;
+    }
+}
+
+/* Mejoras para tablets */
+@media (max-width: 768px) {
+    #quienes-somos .row {
+        flex-direction: column-reverse;
+    }
+    
+    #quienes-somos img {
+        margin-bottom: 2rem;
+    }
+    
+    .product-card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Mejoras para móviles */
+@media (max-width: 576px) {
+    .language-selector-top {
+        top: 5px;
+        right: 10px;
+    }
+    
+    .lang-link {
+        font-size: 0.8rem;
+    }
+    
+    .navbar-brand {
+        height: 70px;
+    }
+    
+    .logo-image-static {
+        height: 70px;
+    }
+    
+    .carousel-caption {
+        padding: 10px;
+    }
+    
+    .carousel-caption h2 {
+        font-size: 1.2rem;
+    }
+    
+    .carousel-caption p {
+        font-size: 0.8rem;
+    }
+    
+    .btn-elegant {
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 }
