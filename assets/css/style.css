@@ -597,3 +597,43 @@ html {
         font-size: 0.9rem;
     }
 }
+/* Estilos para el modal de organigrama */
+#organigramaModal .modal-content {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid var(--primary-color);
+}
+
+#organigramaModal .modal-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--tertiary-color) 100%);
+    color: white;
+    border-bottom: none;
+}
+
+#organigramaModal .modal-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.organigrama-image {
+    border-radius: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eaeaea;
+}
+
+#organigramaModal .modal-footer {
+    border-top: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+}
+
+/* Asegurar buena visualización en dispositivos móviles */
+@media (max-width: 768px) {
+    #organigramaModal .modal-dialog {
+        margin: 10px;
+    }
+    
+    .organigrama-image {
+        max-height: 60vh;
+        width: auto;
+    }
+}

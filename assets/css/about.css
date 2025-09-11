@@ -1,0 +1,30 @@
+/* assets/css/about.css - Estilos específicos para la página about */
+
+.about-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/hero_about_5.png');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive para página about */
+@media (max-width: 768px) {
+    .about-hero {
+        padding: 70px 0;
+    }
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiénes Somos - ExportCampos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/about.css">
+</head>
+<body>
+    <div class="top-line"></div>
+    
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <div class="container-fluid">
+                <!-- Selector de idioma en esquina superior derecha -->
+                <div class="language-selector-top">
+                    <a href="#" class="lang-link active">ES</a>
+                    <span class="lang-separator">|</span>
+                    <a href="#" class="lang-link">EN</a>
+                </div>
+
+                <div class="d-flex align-items-center navbar-top-content">
+                    <a class="navbar-brand" href="../index.html">
+                        <img src="../assets/img/tu-logo_6.png" alt="ExportCampos - Expertos en productos congelados" class="logo-image-static">
+                    </a>
+                    
+                    <div class="center-nav-content d-none d-lg-flex">
+                        <div class="contact-info">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#whatsappModal">
+                                <i class="bi bi-telephone-fill"></i> +56 9 3436 5048
+                            </a>&nbsp; | &nbsp;
+                            <a href="../index.html#contacto">
+                                <i class="bi bi-envelope-fill"></i> info@exportcampos.cl
+                            </a>
+                        </div>
+                        <div class="lines-divider">
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html">Inicio</a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Quiénes Somos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="../index.html#quienes-somos">Historia</a></li>
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#organigramaModal">Organigrama</a></li>
+                                <li><a class="dropdown-item" href="../index.html#instalaciones">Instalaciones</a></li>
+                                <li><a class="dropdown-item active" href="about.html">Misión y Visión</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Productos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="../index.html#productos">Nuestros Congelados</a></li>
+                                <li><a class="dropdown-item" href="products.html">Detalle de Nuestros Productos</a></li>
+                                <li><a class="dropdown-item" href="products.html">Nuestros Empaques</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html#contacto">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="about-hero">
+            <div class="container">
+                <h1 class="display-4 fw-bold">Quiénes Somos</h1>
+                <p class="lead">Conoce más sobre nuestra historia, misión y visión</p>
+            </div>
+        </section>
+
+        <!-- Historia Section -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h2 class="mb-4">Nuestra Historia</h2>
+                        <p class="lead">ExportCampos nació en 1999 con asociados de hecho dedicados a la exportación de frutas y vegetales congelados. Desde nuestros inicios, nos hemos comprometido con la calidad y la excelencia en cada paso del proceso.</p>
+                        <p class="lead">Comenzamos con pequeñas partidas de procesamiento en Linares, Chile, y con el tiempo hemos crecido hasta convertirnos en un referente en la exportación de productos congelados de alta calidad a mercados internacionales.</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="../assets/img/about_body.png" alt="Historia de ExportCampos" class="img-fluid rounded shadow">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Misión y Visión Section -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-bullseye display-4 text-primary mb-3"></i>
+                                <h3 class="card-title">Misión</h3>
+                                <p class="card-text">Nuestra misión es conectar los mejores productos congelados de Chile con los mercados globales, garantizando la más alta calidad en cada envío y manteniendo relaciones comerciales duraderas con nuestros clientes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="bi bi-eye display-4 text-primary mb-3"></i>
+                                <h3 class="card-title">Visión</h3>
+                                <p class="card-text">Ser reconocidos como líderes en el sector de exportación de productos congelados, destacando por nuestra innovación, prácticas sostenibles y contribución al desarrollo de las comunidades locales.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Valores Section -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">Nuestros Valores</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center">
+                            <i class="bi bi-award display-4 text-primary mb-3"></i>
+                            <h4>Calidad</h4>
+                            <p>Comprometidos con los más altos estándares de calidad en todos nuestros procesos y productos.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center">
+                            <i class="bi bi-arrow-repeat display-4 text-primary mb-3"></i>
+                            <h4>Sostenibilidad</h4>
+                            <p>Implementamos prácticas responsables con el medio ambiente y las comunidades donde operamos.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center">
+                            <i class="bi bi-people display-4 text-primary mb-3"></i>
+                            <h4>Trabajo en Equipo</h4>
+                            <p>Valoramos la colaboración y el trabajo conjunto para alcanzar nuestros objetivos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Estandarizado -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 <a href="https://nxchile.com" target="_blank" class="footer-link">nxchile</a> para ExportCampos. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botón flotante de WhatsApp -->
+    <div class="whatsapp-float">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#whatsappModal">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="60" height="60">
+        </a>
+    </div>
+    
+    <!-- Modal de WhatsApp actualizado -->
+    <div class="modal fade" id="whatsappModal" tabindex="-1" aria-labelledby="whatsappModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="whatsappModalLabel">Contactar por WhatsApp</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Seleccione el motivo de su contacto:</p>
+                    <div class="list-group">
+                        <a href="https://wa.me/56934365048?text=Hola,%20quisiera%20saber%20sobre%20cotizaciones%20de%20productos%20internacionales." target="_blank" class="list-group-item list-group-item-action">Cotización Producto Internacional</a>
+                        <a href="https://wa.me/56959008508?text=Hola,%20quisiera%20saber%20sobre%20cotizaciones%20de%20productos%20nacionales." target="_blank" class="list-group-item list-group-item-action">Cotización Producto Nacional</a>
+                        <a href="https://wa.me/56959008508?text=Hola,%20mi%20consulta%20es%20para%20proveedores." target="_blank" class="list-group-item list-group-item-action">Proveedores</a>
+                        <a href="https://wa.me/56959008508?text=Hola,%20mi%20contacto%20es%20por%20otro%20motivo." target="_blank" class="list-group-item list-group-item-action">Otro Motivo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+<!-- Modal de Organigrama -->
+<div class="modal fade" id="organigramaModal" tabindex="-1" aria-labelledby="organigramaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="organigramaModalLabel">Organigrama de ExportCampos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="assets/img/organigrama-exportcampos.png" alt="Organigrama de ExportCampos" class="img-fluid organigrama-image" style="max-width: 100%; height: auto;">
+                    <p class="mt-3 text-muted">Estructura organizacional de ExportCampos - Actualizado 2025</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <a href="assets/img/organigrama-exportcampos.png" download="Organigrama-ExportCampos.png" class="btn btn-primary">
+                    <i class="bi bi-download me-2"></i> Descargar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
