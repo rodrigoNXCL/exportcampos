@@ -454,7 +454,7 @@ html {
     scroll-padding-top: 130px;
 }
 
-/* Mejoras en responsive */
+/* ===== MEJORAS RESPONSIVE - ACTUALIZADO ===== */
 @media (max-width: 1200px) {
     .navbar-nav {
         flex-direction: row;
@@ -473,19 +473,27 @@ html {
     }
     
     .language-selector-top {
-        top: 10px;
+        position: absolute;
+        top: 15px;
         right: 15px;
+        z-index: 1060;
     }
     
     .navbar-top-content {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
     }
     
     .navbar-brand {
         height: 80px;
         margin-right: 0;
-        margin-bottom: 10px;
+        margin-bottom: 0;
+        order: 2;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
     }
     
     .logo-image-static {
@@ -496,23 +504,74 @@ html {
         display: none;
     }
     
+    .navbar-toggler {
+        order: 3;
+        margin-left: auto;
+        z-index: 1040;
+        padding: 0.35rem 0.65rem;
+        border: 1px solid rgba(49, 85, 58, 0.2);
+        border-radius: 4px;
+    }
+    
     .navbar-collapse {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        right: 0;
         background-color: var(--white-color);
+        z-index: 1050;
         padding: 1rem;
-        border-radius: 0 0 8px 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+        border-top: 3px solid var(--primary-color);
     }
     
     .nav-item {
         margin: 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .nav-item:last-child {
+        border-bottom: none;
     }
     
     .nav-link {
-        padding: 0.75rem 0 !important;
+        padding: 0.9rem 1rem !important;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        color: var(--primary-color) !important;
+        font-weight: 600;
     }
     
     .nav-link::after {
-        bottom: 0;
+        display: none;
+    }
+    
+    .nav-link:hover {
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        padding-left: 1.5rem !important;
+    }
+    
+    .dropdown-menu {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+    }
+    
+    .dropdown-item {
+        padding: 0.75rem 1rem;
+        color: var(--primary-color);
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        color: var(--secondary-color);
     }
     
     .carousel-item img {
@@ -544,6 +603,37 @@ html {
         width: 50px;
         height: 50px;
     }
+    
+    /* Información de contacto en el menú móvil */
+    .mobile-contact-info {
+        display: block;
+        padding: 1rem;
+        margin-top: 1rem;
+        border-top: 1px solid #eee;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+    }
+    
+    .mobile-contact-info .contact-info {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+        line-height: 1.4;
+    }
+    
+    .mobile-contact-info .contact-info:last-child {
+        margin-bottom: 0;
+    }
+    
+    .mobile-contact-info .contact-info a {
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+    
+    .mobile-contact-info .contact-info a:hover {
+        color: var(--secondary-color);
+        text-decoration: underline;
+    }
 }
 
 /* Mejoras para tablets */
@@ -564,7 +654,7 @@ html {
 /* Mejoras para móviles */
 @media (max-width: 576px) {
     .language-selector-top {
-        top: 5px;
+        top: 10px;
         right: 10px;
     }
     
@@ -578,6 +668,11 @@ html {
     
     .logo-image-static {
         height: 70px;
+    }
+    
+    .navbar-collapse {
+        top: 95px;
+        max-height: calc(100vh - 95px);
     }
     
     .carousel-caption {
@@ -596,7 +691,13 @@ html {
         padding: 10px 20px;
         font-size: 0.9rem;
     }
+    
+    .nav-link {
+        font-size: 1rem !important;
+        padding: 0.8rem 1rem !important;
+    }
 }
+
 /* Estilos para el modal de organigrama - ACTUALIZADO */
 #organigramaModal .modal-content {
     border-radius: 12px;
