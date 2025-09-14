@@ -769,3 +769,90 @@ html {
         font-size: 1.2rem;
     }
 }
+
+/* ===== OPTIMIZACIÓN DEL LOGO - AGREGAR AL FINAL DEL ARCHIVO ===== */
+
+/* Aumento del tamaño del logo en desktop */
+.navbar-brand {
+    height: 150px !important;
+    margin-right: 25px !important;
+}
+
+.logo-image-static {
+    height: 150px !important;
+    transform: scale(1.1) !important;
+    transform-origin: left center !important;
+    transition: transform 0.3s ease !important; /* Aseguramos la transición */
+}
+
+/* Recuperamos el efecto de hover */
+.logo-image-static:hover {
+    transform: scale(1.15) !important; /* Aumentamos ligeramente el zoom en hover */
+}
+
+/* Ajuste del padding superior para compensar el logo más grande */
+body {
+    padding-top: 160px !important;
+}
+
+/* Ajuste del scroll padding */
+html {
+    scroll-padding-top: 160px !important;
+}
+
+/* Ajustes responsivos para tablets */
+@media (max-width: 992px) {
+    .navbar-brand {
+        height: 100px !important;
+        transform: translateX(-50%) !important;
+    }
+    
+    .logo-image-static {
+        height: 100px !important;
+        transform: scale(1.05) !important;
+    }
+    
+    .logo-image-static:hover {
+        transform: scale(1.1) !important;
+    }
+    
+    body {
+        padding-top: 104px !important;
+    }
+    
+    .navbar-collapse {
+        top: 104px !important;
+    }
+    
+    html {
+        scroll-padding-top: 104px !important;
+    }
+}
+
+/* Ajustes responsivos para móviles */
+@media (max-width: 576px) {
+    .navbar-brand {
+        height: 85px !important;
+    }
+    
+    .logo-image-static {
+        height: 85px !important;
+        transform: scale(1.05) !important;
+    }
+    
+    .logo-image-static:hover {
+        transform: scale(1.08) !important;
+    }
+    
+    body {
+        padding-top: 98px !important;
+    }
+    
+    .navbar-collapse {
+        top: 98px !important;
+    }
+    
+    html {
+        scroll-padding-top: 98px !important;
+    }
+}

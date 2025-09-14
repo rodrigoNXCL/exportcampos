@@ -109,21 +109,34 @@
             </div>
         </section>
 
+<!-- Productos Section -->
+<section class="py-5">
+    <div class="container">
         <!-- Filtros de Productos -->
-        <section class="py-5">
-            <div class="container">
-                <div class="product-filters">
-                    <h3 class="filter-title">Filtrar por categoría:</h3>
-                    <div class="d-flex flex-wrap">
-                        <button class="btn btn-outline-primary filter-btn active">Todos</button>
-                        <button class="btn btn-outline-primary filter-btn">Frutillas</button>
-                        <button class="btn btn-outline-primary filter-btn">Arándanos</button>
-                        <button class="btn btn-outline-primary filter-btn">Frambuesas</button>
-                        <button class="btn btn-outline-primary filter-btn">Moras</button>
-                    </div>
-                </div>
+        <div class="product-filters">
+            <h3 class="filter-title">Filtrar por categoría:</h3>
+            <div class="filter-buttons-container">
+                <button class="btn filter-btn active" data-filter="all">Todos los Productos</button>
+                <button class="btn filter-btn" data-filter="frutillas">Frutillas</button>
+                <button class="btn filter-btn" data-filter="arandanos">Arándanos</button>
+                <button class="btn filter-btn" data-filter="frambuesas">Frambuesas</button>
+                <button class="btn filter-btn" data-filter="moras">Moras</button>
+                <button class="btn filter-btn" data-filter="esparragos">Espárragos</button>
+                <button class="btn filter-btn" data-filter="hongos">Hongos</button>
+                <button class="btn filter-btn" data-filter="kiwi">Kiwi</button>
+                <button class="btn filter-btn" data-filter="cerezas">Cerezas</button>
             </div>
-        </section>
+        </div>
+</section>
+
+ <!-- Contenedor de productos -->
+        <div class="products-container" id="productsContainer">
+            <!-- Mensaje cuando no hay resultados -->
+            <div class="no-results" id="noResults">
+                <i class="bi bi-search" style="font-size: 2.5rem; margin-bottom: 15px;"></i>
+                <h4>No se encontraron productos</h4>
+                <p>Intenta con otra categoría o vuelve a "Todos los Productos"</p>
+            </div>
 
         <!-- Productos Section -->
         <section class="py-5">
@@ -131,7 +144,7 @@
                 <div class="row">
 
 <!-- Producto 0.1: Esparragos Cut -->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item esparragos">
                         <div class="product-detail-card">
                             <img src="../assets/img/EsparragoCut_ficha.png" alt="Esparrago Cut" class="product-image">
                             <div class="product-body">
@@ -232,7 +245,7 @@ incluyen puntas y fragmentos de diferentes longitudes. Sometido a congelación I
                     </div>
 
                     <!-- Producto 0: Esparragos Entero -->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item esparragos">
                         <div class="product-detail-card">
                             <img src="../assets/img/Esparragos_ficha.png" alt="Esparrago Entero" class="product-image">
                             <div class="product-body">
@@ -333,7 +346,7 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
                     </div>
 
                     <!-- Producto 1: Frutillas -->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item frutillas">
                         <div class="product-detail-card">
                             <img src="../assets/img/FrutillaSlice_ficha.png" alt="Frutilla Slice Congelada" class="product-image">
                             <div class="product-body">
@@ -433,7 +446,7 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
                     </div>
 
                     <!-- Producto : Frutillas Entera-->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item frutillas">
                         <div class="product-detail-card">
                             <img src="../assets/img/Frutillas_ficha.png" alt="Frutilla Entera" class="product-image">
                             <div class="product-body">
@@ -533,7 +546,7 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
                     </div>
 
                     <!-- Producto 2: Frambuesa Entera -->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item frambuesas">
                         <div class="product-detail-card">
                             <img src="../assets/img/Frambuesa_ficha.png" alt="Frambuesa Entera" class="product-image">
                             <div class="product-body">
@@ -628,7 +641,7 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
                     </div>
 
                     <!-- Producto 3: Frambuesas Crumble-->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item frambuesas">
                         <div class="product-detail-card">
                             <img src="../assets/img/FrambuesaCrumble_ficha.png" alt="Frambuesa Crumble Congelada" class="product-image">
                             <div class="product-body">
@@ -724,7 +737,7 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
                     </div>
 
                     <!-- Producto 4: Moras -->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item moras">
                         <div class="product-detail-card">
                             <img src="../assets/img/Mora_ficha.png" alt="Mora Congelada de exportación" class="product-image">
                             <div class="product-body">
@@ -825,7 +838,7 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
                     </div>
 
 <!-- Producto: Arandano Entero-->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item arandanos">
                         <div class="product-detail-card">
                             <img src="../assets/img/Arandano_IQF.png" alt="Arandano Entero IQF" class="product-image">
                             <div class="product-body">
@@ -924,7 +937,7 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
 
 <!-- OtroProd -->
 <!-- Producto: Hongo Boletus-->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item hongos">
                         <div class="product-detail-card">
                             <img src="../assets/img/Hongo_Boletus_Cubo.png" alt="Hongo Boletus Cubo" class="product-image">
                             <div class="product-body">
@@ -1024,7 +1037,7 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
 
 <!-- OtroProd -->
 <!-- Producto: Kiwi-->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item kiwi">
                         <div class="product-detail-card">
                             <img src="../assets/img/Kiwi_ficha.png" alt="Kiwi Rodajas" class="product-image">
                             <div class="product-body">
@@ -1124,7 +1137,7 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
 
 <!-- OtroProd -->
 <!-- Producto: Mix Berries-->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item mix">
                         <div class="product-detail-card">
                             <img src="../assets/img/MixBerries_Ficha.png" alt="Mix 4 Berries" class="product-image">
                             <div class="product-body">
@@ -1227,7 +1240,7 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
 
 <!-- OtroProd -->
 <!-- Producto: Cerezas-->
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-5 product-item cerezas">
                         <div class="product-detail-card">
                             <img src="../assets/img/Cereza_ficha.png" alt="Cerezas Deshuezadas" class="product-image">
                             <div class="product-body">
@@ -1410,5 +1423,57 @@ sanitizados, recortados, calibrados y sometidos a escaldado y congelación IQF a
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const productItems = document.querySelectorAll('.product-item');
+    const productsContainer = document.getElementById('productsContainer');
+    const noResultsMessage = document.getElementById('noResults');
+    const productRow = document.querySelector('.row');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remover la clase active de todos los botones
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Añadir la clase active al botón clickeado
+            this.classList.add('active');
+            
+            // Obtener el valor del filtro
+            const filterValue = this.getAttribute('data-filter');
+            
+            // Añadir clase para indicar que se está filtrando
+            productsContainer.classList.add('filtering');
+            
+            // Ocultar mensaje de no resultados inicialmente
+            noResultsMessage.classList.remove('show');
+            
+            // Contador de productos visibles
+            let visibleCount = 0;
+            
+            // Filtrar productos
+            productItems.forEach(item => {
+                if (filterValue === 'all' || item.classList.contains(filterValue)) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+            
+            // Mostrar mensaje si no hay resultados
+            if (visibleCount === 0) {
+                noResultsMessage.classList.add('show');
+            }
+            
+            // Remover la clase de filtrado después de la animación
+            setTimeout(() => {
+                productsContainer.classList.remove('filtering');
+            }, 500);
+        });
+    });
+});
+</script>
+
 </body>
 </html>
