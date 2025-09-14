@@ -1,6 +1,6 @@
-// assets/js/quote.js - Funcionalidad para la página de cotización
+// assets/js/quote.js - Funcionalidad completa para la página de cotización
 
-// Datos de productos (deberían coincidir con los de products.html)
+// Datos de productos (deben coincidir con los de products.html)
 const products = [
     { id: 1, name: "Espárragos Cut Tips Irregular IQF", price: 0, category: "esparragos" },
     { id: 2, name: "Espárragos Enteros IQF – Grado A", price: 0, category: "esparragos" },
@@ -16,11 +16,14 @@ const products = [
     { id: 12, name: "Cerezas Deshuezadas", price: 0, category: "cerezas" }
 ];
 
+// Inicializar EmailJS con tu User ID
+// REEMPLAZA 'TU_USER_ID_AQUI' con tu User ID real de EmailJS
+emailjs.init("PQlMhQBtXya2tNtz-");
+
 document.addEventListener('DOMContentLoaded', function() {
     // Variables globales
     let currentStep = 1;
     const totalSteps = 3;
-    let selectedProducts = [];
     
     // Inicializar select de productos
     initializeProductSelection();
@@ -274,16 +277,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Generar PDF
         generatePDF(formData);
         
-        // Enviar por correo (aquí se integraría con un servicio backend)
+        // Enviar por correo usando EmailJS
         sendEmail(formData);
-        
-        // Mostrar mensaje de confirmación
-        alert('¡Cotización generada con éxito! Se ha enviado una copia a su correo electrónico.');
-        
-        // Redirigir a la página de inicio después de 3 segundos
-        setTimeout(() => {
-            window.location.href = '../index.html';
-        }, 3000);
     }
     
     // Función para generar PDF
@@ -293,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const doc = new jsPDF();
         
         // Logo (ajustar según la ruta correcta)
-        doc.addImage('../assets/img/tu-logo_6.png', 'PNG', 15, 15, 40, 15);
+        doc.addImage('../assets/img/tu-logo_6_5 (sf).png', 'PNG', 15, 15, 40, 15);
         
         // Título
         doc.setFontSize(20);
@@ -356,22 +351,62 @@ document.addEventListener('DOMContentLoaded', function() {
         doc.save(`Cotización_${formData.company}_${today.toISOString().slice(0, 10)}.pdf`);
     }
     
-    // Función para enviar por correo (simulación)
+    // Función para enviar por correo con EmailJS
     function sendEmail(formData) {
-        // En un entorno real, aquí se haría una petición a un servidor
-        // que enviaría los correos usando un servicio como EmailJS, SendGrid, etc.
-        console.log('Simulando envío de correo a:', formData.email);
-        console.log('Simulando envío de correo a: info@exportcampos.cl');
-        
-        // Ejemplo de cómo se podría implementar con EmailJS:
-        /*
-        emailjs.send('service_id', 'template_id', {
-            to_email: formData.email,
-            from_name: 'ExportCampos',
-            to_name: formData.contactPerson,
+        // Preparar los parámetros para la plantilla
+        const templateParams = {
             company: formData.company,
-            message: 'Aquí iría el contenido del correo con la cotización'
-        });
-        */
+            contact_person: formData.contactPerson,
+            email: formData.email,
+            phone: formData.phone,
+            country: formData.country,
+            city: formData.city,
+            address: formData.address,
+            notes: formData.notes || 'No hay notas adicionales',
+            products: formData.products.map(p => 
+                `${p.name} - ${p.quantity} ${p.unit} - $${p.price} c/u - Subtotal: $${p.subtotal}`
+            ).join('\n'),
+            total: `$${formData.total.toLocaleString('es-CL')}`
+        };
+
+        // Enviar el correo usando EmailJS
+        // REEMPLAZA 'TU_SERVICE_ID' y 'TU_TEMPLATE_ID' con tus valores reales
+        emailjs.send('service_ox0em5e', 'template_oy8mf0n', templateParams)
+            .then(function(response) {
+                console.log('Correo enviado al equipo con éxito!', response.status, response.text);
+                
+                // Enviar copia al cliente
+                const clientTemplateParams = {
+                    company: formData.company,
+                    contact_person: formData.contactPerson,
+                    email: formData.email,
+                    products: formData.products.map(p => 
+                        `${p.name} - ${p.quantity} ${p.unit} - $${p.price} c/u`
+                    ).join('\n'),
+                    total: `$${formData.total.toLocaleString('es-CL')}`,
+                    notes: formData.notes || 'No hay notas adicionales'
+                };
+                
+                // REEMPLAZA 'TEMPLATE_ID_CLIENTE' con el ID de tu plantilla para clientes
+                return emailjs.send('service_ox0em5e', 'TEMPLATE_ID_CLIENTE', clientTemplateParams);
+            })
+            .then(function(response) {
+                console.log('Copia al cliente enviada!', response.status, response.text);
+                alert('¡Cotización generada con éxito! Se ha enviado una copia a su correo electrónico.');
+                
+                // Redirigir a la página de inicio después de 3 segundos
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, 3000);
+            })
+            .catch(function(error) {
+                console.error('Error al enviar el correo:', error);
+                alert('¡Cotización generada con éxito! Sin embargo, hubo un problema al enviar el correo. Por favor contáctenos directamente.');
+                
+                // Aún así redirigir a la página de inicio después de 3 segundos
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, 3000);
+            });
     }
 });
