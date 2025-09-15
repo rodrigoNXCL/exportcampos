@@ -122,38 +122,44 @@
         <!-- Formulario de Cotización -->
         <section class="py-5">
             <div class="container">
-                <form id="quoteForm">
+                <form id="quoteForm" action="https://formspree.io/f/xrbavlyd" method="POST">
+                    <!-- Campos ocultos para Formspree -->
+                    <input type="hidden" name="_subject" value="Nueva Cotización - ExportCampos">
+                    <input type="hidden" name="_replyto" id="formspreeReplyTo">
+                    <input type="hidden" name="_next" value="../index.html">
+                    <input type="hidden" name="_language" value="es">
+                    
                     <!-- Paso 1: Información del cliente -->
                     <div class="step active" id="step1">
                         <h3 class="mb-4">Información del Cliente</h3>
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="company" class="form-label">Empresa <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="company" required>
+                                <input type="text" class="form-control" id="company" name="company" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="contactPerson" class="form-label">Persona de Contacto <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="contactPerson" required>
+                                <input type="text" class="form-control" id="contactPerson" name="contactPerson" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                <input type="email" class="form-control" id="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="phone" class="form-label">Teléfono <span class="text-danger">*</span></label>
-                                <input type="tel" class="form-control" id="phone" required>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="country" class="form-label">País <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="country" required>
+                                <input type="text" class="form-control" id="country" name="country" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="city" class="form-label">Ciudad <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="city" required>
+                                <input type="text" class="form-control" id="city" name="city" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label for="address" class="form-label">Dirección</label>
-                                <textarea class="form-control" id="address" rows="2"></textarea>
+                                <textarea class="form-control" id="address" name="address" rows="2"></textarea>
                             </div>
                         </div>
                         <div class="text-end mt-4">
@@ -230,11 +236,11 @@
                         
                         <div class="mb-4">
                             <label for="notes" class="form-label">Notas adicionales (opcional)</label>
-                            <textarea class="form-control" id="notes" rows="3" placeholder="Especificaciones adicionales, requisitos de empaque, etc."></textarea>
+                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Especificaciones adicionales, requisitos de empaque, etc."></textarea>
                         </div>
                         
                         <div class="form-check mb-4">
-                            <input class="form-check-input" type="checkbox" id="terms" required>
+                            <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
                             <label class="form-check-label" for="terms">
                                 Acepto los términos y condiciones y autorizo el tratamiento de mis datos personales
                             </label>
@@ -292,8 +298,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-    <!-- EmailJS CDN - AGREGAR ESTA LÍNEA -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="../assets/js/quote.js"></script>
 
 <!-- Modal para Organigrama -->
@@ -316,5 +320,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Actualizar el campo _replyto de Formspree con el email del cliente
+    document.getElementById('email').addEventListener('change', function() {
+        document.getElementById('formspreeReplyTo').value = this.value;
+    });
+</script>
 </body>
 </html>
