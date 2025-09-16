@@ -1,4 +1,4 @@
-// assets/js/quote.js - Funcionalidad mejorada para cotizaciones
+// assets/js/quote.js - Solución corregida
 
 // Datos de productos
 const products = [
@@ -19,7 +19,15 @@ const products = [
 // ID del formulario de Formspree
 const FORMSPREE_FORM_ID = 'xrbavlyd';
 
+// Inicializar EmailJS solo para enviar copias al cliente
+emailjs.init("PQlMhQBtXya2tNtz-");
+
+// Declarar funciones que se usarán en múltiples lugares
+let generatePDF, sendFormspree, sendClientCopy;
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM cargado - Inicializando formulario de cotización');
+    
     // Variables globales
     let currentStep = 1;
     const totalSteps = 3;
@@ -48,10 +56,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Manejar envío del formulario
-    document.getElementById('quoteForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        generateQuote();
-    });
+    const quoteForm = document.getElementById('quoteForm');
+    if (quoteForm) {
+        quoteForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Formulario enviado - Generando cotización');
+            generateQuote();
+        });
+    } else {
+        console.error('No se encontró el formulario con ID quoteForm');
+    }
     
     // Función para inicializar la selección de productos
     function initializeProductSelection() {
@@ -62,6 +76,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Función para añadir fila de producto
     function addProductRow(product = null) {
         const productSelection = document.getElementById('productSelection');
+        if (!productSelection) {
+            console.error('No se encontró el elemento productSelection');
+            return;
+        }
+        
         const rowIndex = document.querySelectorAll('.product-item-quote').length;
         
         const row = document.createElement('div');
@@ -108,6 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Función para navegar entre pasos
     function goToStep(stepId) {
+        console.log('Navegando al paso:', stepId);
+        
         // Validar el paso actual antes de avanzar
         if (stepId === 'step2' && !validateStep1()) return;
         if (stepId === 'step3' && !validateStep2()) return;
@@ -116,14 +137,19 @@ document.addEventListener('DOMContentLoaded', function() {
             step.classList.remove('active');
         });
         
-        document.getElementById(stepId).classList.add('active');
-        currentStep = parseInt(stepId.replace('step', ''));
-        
-        if (stepId === 'step3') {
-            updateSummary();
+        const stepElement = document.getElementById(stepId);
+        if (stepElement) {
+            stepElement.classList.add('active');
+            currentStep = parseInt(stepId.replace('step', ''));
+            
+            if (stepId === 'step3') {
+                updateSummary();
+            }
+            
+            updateProgressBar();
+        } else {
+            console.error('No se encontró el paso:', stepId);
         }
-        
-        updateProgressBar();
     }
     
     // Función para validar el paso 1
@@ -133,11 +159,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         requiredFields.forEach(field => {
             const input = document.getElementById(field);
-            if (!input.value.trim()) {
-                input.classList.add('is-invalid');
+            if (!input || !input.value.trim()) {
+                if (input) input.classList.add('is-invalid');
                 isValid = false;
             } else {
-                input.classList.remove('is-invalid');
+                if (input) input.classList.remove('is-invalid');
             }
         });
         
@@ -185,59 +211,81 @@ document.addEventListener('DOMContentLoaded', function() {
             total += quantity * price;
         });
         
-        document.getElementById('totalAmount').textContent = `$${total.toLocaleString('es-CL')}`;
+        const totalElement = document.getElementById('totalAmount');
+        if (totalElement) {
+            totalElement.textContent = `$${total.toLocaleString('es-CL')}`;
+        }
     }
     
     // Función para actualizar la barra de progreso
     function updateProgressBar() {
         const progress = (currentStep / totalSteps) * 100;
-        document.querySelector('.progress-bar').style.width = `${progress}%`;
-        document.querySelector('.progress-bar').setAttribute('aria-valuenow', progress);
+        const progressBar = document.querySelector('.progress-bar');
+        if (progressBar) {
+            progressBar.style.width = `${progress}%`;
+            progressBar.setAttribute('aria-valuenow', progress);
+        }
     }
     
     // Función para actualizar el resumen
     function updateSummary() {
         // Resumen del cliente
         const clientSummary = document.getElementById('clientSummary');
-        clientSummary.innerHTML = `
-            <p><strong>Empresa:</strong> ${document.getElementById('company').value}</p>
-            <p><strong>Contacto:</strong> ${document.getElementById('contactPerson').value}</p>
-            <p><strong>Email:</strong> ${document.getElementById('email').value}</p>
-            <p><strong>Teléfono:</strong> ${document.getElementById('phone').value}</p>
-            <p><strong>Ubicación:</strong> ${document.getElementById('city').value}, ${document.getElementById('country').value}</p>
-        `;
+        if (clientSummary) {
+            clientSummary.innerHTML = `
+                <p><strong>Empresa:</strong> ${document.getElementById('company').value}</p>
+                <p><strong>Contacto:</strong> ${document.getElementById('contactPerson').value}</p>
+                <p><strong>Email:</strong> ${document.getElementById('email').value}</p>
+                <p><strong>Teléfono:</strong> ${document.getElementById('phone').value}</p>
+                <p><strong>Ubicación:</strong> ${document.getElementById('city').value}, ${document.getElementById('country').value}</p>
+            `;
+        }
         
         // Resumen de productos
         const productsSummary = document.getElementById('productsSummary');
-        productsSummary.innerHTML = '';
-        let total = 0;
-        
-        document.querySelectorAll('.product-item-quote').forEach(row => {
-            const productId = row.querySelector('.product-select').value;
-            const product = products.find(p => p.id == productId);
-            const quantity = parseFloat(row.querySelector('.quantity-input').value) || 0;
-            const unit = row.querySelector('.unit-select').value;
-            const price = parseFloat(row.querySelector('.price-input').value) || 0;
-            const subtotal = quantity * price;
-            total += subtotal;
+        if (productsSummary) {
+            productsSummary.innerHTML = '';
+            let total = 0;
             
-            if (product) {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${product.name}</td>
-                    <td>${quantity} ${unit}</td>
-                    <td>$${price.toLocaleString('es-CL')}</td>
-                    <td>$${subtotal.toLocaleString('es-CL')}</td>
-                `;
-                productsSummary.appendChild(tr);
+            document.querySelectorAll('.product-item-quote').forEach(row => {
+                const productId = row.querySelector('.product-select').value;
+                const product = products.find(p => p.id == productId);
+                const quantity = parseFloat(row.querySelector('.quantity-input').value) || 0;
+                const unit = row.querySelector('.unit-select').value;
+                const price = parseFloat(row.querySelector('.price-input').value) || 0;
+                const subtotal = quantity * price;
+                total += subtotal;
+                
+                if (product) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${product.name}</td>
+                        <td>${quantity} ${unit}</td>
+                        <td>$${price.toLocaleString('es-CL')}</td>
+                        <td>$${subtotal.toLocaleString('es-CL')}</td>
+                    `;
+                    productsSummary.appendChild(tr);
+                }
+            });
+            
+            const summaryTotal = document.getElementById('summaryTotal');
+            if (summaryTotal) {
+                summaryTotal.textContent = `$${total.toLocaleString('es-CL')}`;
             }
-        });
-        
-        document.getElementById('summaryTotal').textContent = `$${total.toLocaleString('es-CL')}`;
+        }
     }
     
     // Función para generar la cotización (PDF y envío por Formspree)
     function generateQuote() {
+        console.log('Generando cotización...');
+        
+        // Validar términos y condiciones
+        const termsCheckbox = document.getElementById('terms');
+        if (!termsCheckbox || !termsCheckbox.checked) {
+            alert('Debe aceptar los términos y condiciones para continuar.');
+            return;
+        }
+        
         // Recopilar datos del formulario
         const formData = {
             company: document.getElementById('company').value,
@@ -276,152 +324,196 @@ document.addEventListener('DOMContentLoaded', function() {
         // Generar PDF
         generatePDF(formData);
         
-        // Enviar por Formspree
+        // Enviar por Formspree (para la empresa)
         sendFormspree(formData);
+        
+        // Enviar copia al cliente usando EmailJS
+        sendClientCopy(formData);
     }
     
-    // Función para generar PDF
-    function generatePDF(formData) {
-        // Usar jsPDF para generar el PDF
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        
-        // Logo con dimensiones mejoradas
-        doc.addImage('../assets/img/tu-logo_6_5 (sf).png', 'PNG', 15, 15, 50, 18); // Ajustado para mejor proporción
-        
-        // Título
-        doc.setFontSize(20);
-        doc.setTextColor(49, 85, 58); // Color verde oscuro
-        doc.text('COTIZACIÓN', 105, 25, { align: 'center' });
-        
-        // Información de la empresa
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0); // Negro
-        doc.text('Exportadora de Berries Wilson Campos SpA', 15, 40);
-        doc.text('+56 9 3436 5048 | info@exportcampos.cl', 15, 45);
-        
-        // Información del cliente
-        doc.setFontSize(12);
-        doc.text('Cliente:', 15, 60);
-        doc.setFontSize(10);
-        doc.text(`Empresa: ${formData.company}`, 15, 65);
-        doc.text(`Contacto: ${formData.contactPerson}`, 15, 70);
-        doc.text(`Email: ${formData.email}`, 15, 75);
-        doc.text(`Teléfono: ${formData.phone}`, 15, 80);
-        doc.text(`Ubicación: ${formData.city}, ${formData.country}`, 15, 85);
-        
-        // Fecha
-        const today = new Date();
-        doc.text(`Fecha: ${today.toLocaleDateString('es-CL')}`, 150, 60);
-        
-        // Tabla de productos
-        const tableColumn = ["Producto", "Cantidad", "Precio Unitario", "Subtotal"];
-        const tableRows = [];
-        
-        formData.products.forEach(product => {
-            const productData = [
-                product.name,
-                `${product.quantity} ${product.unit}`,
-                `$${product.price.toLocaleString('es-CL')}`,
-                `$${product.subtotal.toLocaleString('es-CL')}`
-            ];
-            tableRows.push(productData);
-        });
-        
-        // Añadir fila de total
-        tableRows.push(['', '', 'TOTAL:', `$${formData.total.toLocaleString('es-CL')}`]);
-        
-        // Generar tabla
-        doc.autoTable({
-            startY: 100,
-            head: [tableColumn],
-            body: tableRows,
-            theme: 'grid',
-            headStyles: {
-                fillColor: [49, 85, 58],
-                textColor: [255, 255, 255],
-                fontStyle: 'bold'
-            },
-            alternateRowStyles: {
-                fillColor: [240, 240, 240]
+    // Asignar las funciones a las variables globales
+    generatePDF = function(formData) {
+        try {
+            // Usar jsPDF para generar el PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Logo con dimensiones mejoradas
+            // Nota: Asegúrate de que la ruta del logo sea correcta
+            try {
+                doc.addImage('../assets/img/tu-logo_6_5 (sf).png', 'PNG', 15, 15, 50, 18);
+            } catch (e) {
+                console.warn('No se pudo cargar el logo:', e);
             }
-        });
-        
-        // Notas
-        if (formData.notes) {
-            doc.text('Notas:', 15, doc.lastAutoTable.finalY + 15);
-            doc.text(formData.notes, 15, doc.lastAutoTable.finalY + 20, { maxWidth: 180 });
+            
+            // Título
+            doc.setFontSize(20);
+            doc.setTextColor(49, 85, 58);
+            doc.text('COTIZACIÓN', 105, 25, { align: 'center' });
+            
+            // Información de la empresa
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Exportadora de Berries Wilson Campos SpA', 15, 40);
+            doc.text('+56 9 3436 5048 | info@exportcampos.cl', 15, 45);
+            
+            // Información del cliente
+            doc.setFontSize(12);
+            doc.text('Cliente:', 15, 60);
+            doc.setFontSize(10);
+            doc.text(`Empresa: ${formData.company}`, 15, 65);
+            doc.text(`Contacto: ${formData.contactPerson}`, 15, 70);
+            doc.text(`Email: ${formData.email}`, 15, 75);
+            doc.text(`Teléfono: ${formData.phone}`, 15, 80);
+            doc.text(`Ubicación: ${formData.city}, ${formData.country}`, 15, 85);
+            
+            // Fecha
+            const today = new Date();
+            doc.text(`Fecha: ${today.toLocaleDateString('es-CL')}`, 150, 60);
+            
+            // Tabla de productos
+            const tableColumn = ["Producto", "Cantidad", "Precio Unitario", "Subtotal"];
+            const tableRows = [];
+            
+            formData.products.forEach(product => {
+                const productData = [
+                    product.name,
+                    `${product.quantity} ${product.unit}`,
+                    `$${product.price.toLocaleString('es-CL')}`,
+                    `$${product.subtotal.toLocaleString('es-CL')}`
+                ];
+                tableRows.push(productData);
+            });
+            
+            // Añadir fila de total
+            tableRows.push(['', '', 'TOTAL:', `$${formData.total.toLocaleString('es-CL')}`]);
+            
+            // Generar tabla
+            doc.autoTable({
+                startY: 100,
+                head: [tableColumn],
+                body: tableRows,
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [49, 85, 58],
+                    textColor: [255, 255, 255],
+                    fontStyle: 'bold'
+                },
+                alternateRowStyles: {
+                    fillColor: [240, 240, 240]
+                }
+            });
+            
+            // Notas
+            if (formData.notes) {
+                doc.text('Notas:', 15, doc.lastAutoTable.finalY + 15);
+                doc.text(formData.notes, 15, doc.lastAutoTable.finalY + 20, { maxWidth: 180 });
+            }
+            
+            // Guardar PDF
+            const fileName = `Cotización_${formData.company}_${today.toISOString().slice(0, 10)}.pdf`;
+            doc.save(fileName);
+        } catch (error) {
+            console.error('Error al generar PDF:', error);
         }
-        
-        // Guardar PDF
-        const fileName = `Cotización_${formData.company}_${today.toISOString().slice(0, 10)}.pdf`;
-        doc.save(fileName);
-    }
+    };
     
-    // Función para enviar por Formspree con mejor formato
-    function sendFormspree(formData) {
-        // Crear un formulario dinámico para Formspree
-        const form = document.createElement('form');
-        form.style.display = 'none';
-        form.method = 'POST';
-        form.action = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
-        
-        // Añadir campos al formulario
-        const addField = (name, value) => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = name;
-            input.value = value;
-            form.appendChild(input);
-        };
-        
-        // Campos básicos
-        addField('company', formData.company);
-        addField('contactPerson', formData.contactPerson);
-        addField('email', formData.email);
-        addField('phone', formData.phone);
-        addField('country', formData.country);
-        addField('city', formData.city);
-        addField('address', formData.address || '');
-        addField('notes', formData.notes || '');
-        addField('total', `$${formData.total.toLocaleString('es-CL')}`);
-        
-        // Productos con formato mejorado para el correo
-        let productsText = 'DETALLE DE PRODUCTOS:\n\n';
-        formData.products.forEach((p, index) => {
-            productsText += `PRODUCTO ${index + 1}:\n`;
-            productsText += `• Nombre: ${p.name}\n`;
-            productsText += `• Cantidad: ${p.quantity} ${p.unit}\n`;
-            productsText += `• Precio unitario: $${p.price}\n`;
-            productsText += `• Subtotal: $${p.subtotal}\n\n`;
-        });
-        
-        addField('products', productsText);
-        
-        // Campo para formato de correo
-        addField('_format', 'plain');
-        
-        // Asunto personalizado
-        addField('_subject', `Nueva Cotización de ${formData.company}`);
-        
-        // Reply-to
-        addField('_replyto', formData.email);
-        
-        // Redirección después del envío
-        addField('_next', '../quote-thankyou.html');
-        
-        // Añadir el formulario al DOM y enviarlo
-        document.body.appendChild(form);
-        
-        // Mostrar mensaje de éxito
-        alert('¡Cotización generada con éxito! Se ha enviado una copia a nuestro equipo y pronto nos pondremos en contacto. También se ha enviado una copia a su correo electrónico.');
-        
-        // Enviar formulario
-        form.submit();
-        
-        // Redirigir a la página de agradecimiento después de 3 segundos
-        setTimeout(() => {
-            window.location.href = '../quote-thankyou.html';
-        }, 3000);
-    }
+    // Función para enviar por Formspree (para la empresa)
+    sendFormspree = function(formData) {
+        try {
+            // Crear un formulario dinámico para Formspree
+            const form = document.createElement('form');
+            form.style.display = 'none';
+            form.method = 'POST';
+            form.action = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
+            
+            // Añadir campos al formulario
+            const addField = (name, value) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = value;
+                form.appendChild(input);
+            };
+            
+            // Campos básicos
+            addField('company', formData.company);
+            addField('contactPerson', formData.contactPerson);
+            addField('email', formData.email);
+            addField('phone', formData.phone);
+            addField('country', formData.country);
+            addField('city', formData.city);
+            addField('address', formData.address || '');
+            addField('notes', formData.notes || '');
+            addField('total', `$${formData.total.toLocaleString('es-CL')}`);
+            
+            // Productos con formato mejorado para el correo
+            let productsText = 'DETALLE DE PRODUCTOS:\n\n';
+            formData.products.forEach((p, index) => {
+                productsText += `PRODUCTO ${index + 1}:\n`;
+                productsText += `• Nombre: ${p.name}\n`;
+                productsText += `• Cantidad: ${p.quantity} ${p.unit}\n`;
+                productsText += `• Precio unitario: $${p.price}\n`;
+                productsText += `• Subtotal: $${p.subtotal}\n\n`;
+            });
+            
+            addField('products', productsText);
+            
+            // Campo para formato de correo
+            addField('_format', 'plain');
+            
+            // Asunto personalizado
+            addField('_subject', `Nueva Cotización de ${formData.company}`);
+            
+            // Reply-to
+            addField('_replyto', formData.email);
+            
+            // Añadir el formulario al DOM
+            document.body.appendChild(form);
+            
+            // Enviar formulario
+            form.submit();
+        } catch (error) {
+            console.error('Error al enviar a Formspree:', error);
+        }
+    };
+    
+    // Función para enviar copia al cliente usando EmailJS
+    sendClientCopy = function(formData) {
+        try {
+            // Preparar los parámetros para la plantilla de EmailJS
+            const templateParams = {
+                company: formData.company,
+                contact_person: formData.contactPerson,
+                email: formData.email,
+                phone: formData.phone,
+                country: formData.country,
+                city: formData.city,
+                address: formData.address || 'No especificada',
+                notes: formData.notes || 'No hay notas adicionales',
+                products: formData.products.map(p => 
+                    `${p.name} - ${p.quantity} ${p.unit} - $${p.price} c/u - Subtotal: $${p.subtotal}`
+                ).join('\n'),
+                total: `$${formData.total.toLocaleString('es-CL')}`,
+                date: new Date().toLocaleDateString('es-CL')
+            };
+
+            // Enviar el correo usando EmailJS
+            emailjs.send('service_ox0em5e', 'template_oy8mf0n', templateParams)
+                .then(function(response) {
+                    console.log('Copia al cliente enviada!', response.status, response.text);
+                    // Redirigir a la página de agradecimiento
+                    window.location.href = 'quote-thankyou.html';
+                }, function(error) {
+                    console.error('Error al enviar copia al cliente:', error);
+                    // Aún así redirigir pero mostrar mensaje de advertencia
+                    alert('¡Cotización generada con éxito! Sin embargo, hubo un problema al enviar la copia a su correo electrónico.');
+                    window.location.href = 'quote-thankyou.html';
+                });
+        } catch (error) {
+            console.error('Error en sendClientCopy:', error);
+            // Redirigir incluso si hay error
+            window.location.href = 'quote-thankyou.html';
+        }
+    };
 });
