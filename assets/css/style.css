@@ -856,3 +856,50 @@ html {
         scroll-padding-top: 98px !important;
     }
 }
+/* =========================================================
+   FIX MÓVIL – LOGO COMPLETO + EVITAR SUPERPOSICIÓN
+   ========================================================= */
+@media (max-width: 576px) {
+
+  /* 1. Logo centrado y visible */
+  .navbar-brand {
+    position: relative !important;   /* necesario para left:50% */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    height: 70px !important;
+    margin: 0 !important;            /* elimina offsets */
+  }
+  .logo-image-static {
+    height: 70px !important;
+    transform: none !important;      /* anula scale previo */
+  }
+
+  /* 2. Idiomas fuera del alcance del botón */
+  .language-selector-top {
+    position: absolute !important;
+    top: 10px !important;
+    right: 70px !important;          /* deja espacio para el toggler */
+    z-index: 1060 !important;
+  }
+
+  /* 3. Hamburguesa a la derecha pero sin invadir */
+  .navbar-toggler {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 1040 !important;
+    padding: 0.35rem 0.65rem !important;
+  }
+
+  /* 4. Ajuste de altura general */
+  body {
+    padding-top: 90px !important;    /* compensa logo más grande */
+  }
+  .navbar-collapse {
+    top: 90px !important;
+  }
+  html {
+    scroll-padding-top: 90px !important;
+  }
+}
+/* ========================================================= */
