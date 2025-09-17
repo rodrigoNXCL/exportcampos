@@ -1,78 +1,11 @@
 /* ----------------------------------------------------------
    EXPORTCAMPOS – COTIZADOR EN LÍNEA  (ESPAÑOL)
    ---------------------------------------------------------- */
-import LOGO_JPEG_B64 from './logo.js';   // Logo nítido JPEG base-64
+// Logo en base64 (asegúrate de que logo.js exporte correctamente)
+import LOGO_JPEG_B64 from './logo.js';
 
 /* 1.  CONFIG GLOBAL */
 const FORMSPREE_FORM_ID = 'xrbavlyd';   // ID real Formspree
-// ENVÍO A LA EMPRESA (Formspree) – español
-/* ---------  FORMSPREE  –  sólo texto plano  --------- */
-async function sendFormspree(d) {
-  const body = new FormData();
-  body.append('company',       d.company);
-  body.append('contactPerson', d.contactPerson);
-  body.append('email',         d.email);
-  body.append('phone',         d.phone);
-  body.append('country',       d.country);
-  body.append('city',          d.city);
-  body.append('address',       d.address || '');
-  body.append('notes',         d.notes   || 'Sin notas');
-
-  // 1 línea por producto, sin símbolos raros
-  const detalle = d.products.map((p,i) =>
-    `${i+1}. ${p.name}  |  ${p.quantity} ${p.unit}  |  $${p.price}  |  sub $${p.subtotal}`
-  ).join('  \n');
-
-  body.append('products', detalle);
-  body.append('_subject', `Cotización ${d.company}`);   // ← campo especial de Formspree
-  body.append('_replyto', d.email);                     // ← para que respondas al cliente
-
-  try {
-    const r = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
-      method: 'POST',
-      body
-    });
-    if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
-    console.log('Formspree OK');
-    console.log('Lanzando EmailJS...');
-  } catch (e) {
-    console.error('Formspree falló:', e);
-  }
-}
-
-/* ---------  EMAILJS  –  variables exactas del template  --------- */
-async function sendClientCopy(d) {
-  const productsHTML = d.products.map((p, i) =>
-    `<tr>
-       <td>${i+1}. ${p.name}</td>
-       <td>${p.quantity} ${p.unit}</td>
-       <td>$${p.price.toLocaleString('es-CL')}</td>
-       <td>$${p.subtotal.toLocaleString('es-CL')}</td>
-     </tr>`).join('');
-
-  const params = {
-    contact_person: d.contactPerson,
-    company:        d.company,
-    email:          d.email,
-    phone:          d.phone,
-    country:        d.country,
-    city:           d.city,
-    products:       productsHTML,
-    total:          `$${d.total.toLocaleString('es-CL')}`,
-    notes:          d.notes || '',
-    reply_to:       'info@exportcampos.cl',
-    subject:        `Copia de cotización - ${d.company}`
-  };
-
-  try {
-    await emailjs.send('service_3bj2l7l','template_0nx6s7p', params);
-    console.log('EmailJS OK');
-    console.log('EmailJS params:', params);
-  } catch (err) {
-    console.error('EmailJS falló:', err);
-    alert('Se generó el PDF, pero no pudimos enviarte la copia. Te contactaremos en breve.');
-  }
-}
 
 const products = [
     { id: 1, name: 'Espárragos Cut Tips Irregular IQF',         price: 0, category: 'esparragos' },
@@ -112,6 +45,7 @@ function bindNavigation() {
         btn.addEventListener('click', () => goToStep(btn.dataset.prev))
     );
 }
+
 function goToStep(stepId) {
     if (stepId === 'step2' && !validateStep1()) return;
     if (stepId === 'step3' && !validateStep2()) return;
@@ -128,9 +62,11 @@ function initProductSelection() {
     addProductRow();
     updateProgressBar();
 }
+
 function bindAddProduct() {
     document.querySelector('.add-product').addEventListener('click', () => addProductRow());
 }
+
 function addProductRow(product = null) {
     const container = document.getElementById('productSelection');
     const idx = container.querySelectorAll('.product-item-quote').length;
@@ -166,6 +102,7 @@ function validateStep1() {
     if (!ok) alert('Complete todos los campos obligatorios.');
     return ok;
 }
+
 function validateStep2() {
     let ok = true;
     document.querySelectorAll('.product-item-quote').forEach(r => {
@@ -240,11 +177,29 @@ function bindSubmit() {
 }
 
 /* ----------  GENERAR COTIZACIÓN (PDF + EMAILS)  ---------- */
-function generateQuote() {
+async function generateQuote() {
     const formData = collectFormData();
     generatePDF(formData);
-    sendFormspree(formData);
-    sendClientCopy(formData);
+    
+    // Mostrar estado de envío
+    const btn = document.querySelector('#quoteForm button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Enviando…';
+    
+    try {
+        await Promise.all([
+            sendFormspree(formData),
+            sendClientCopy(formData)
+        ]);
+        alert('¡Cotización enviada con éxito! Revisa tu correo (incluido spam).');
+        window.location.href = '../quote-thankyou.html';
+    } catch (error) {
+        console.error('Error en el envío:', error);
+        alert('Se generó el PDF, pero hubo un problema al enviar los correos. Te contactaremos pronto.');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-send me-2"></i>Enviar Solicitud de Cotización';
+    }
 }
 
 function collectFormData() {
@@ -282,7 +237,11 @@ function generatePDF(d) {
     const today = new Date();
 
     // Logo nítido JPEG base-64
-    doc.addImage(LOGO_JPEG_B64, 'JPEG', 15, 15, 50, 18);
+    try {
+        doc.addImage(LOGO_JPEG_B64, 'JPEG', 15, 15, 50, 18);
+    } catch (e) {
+        console.warn('No se pudo cargar el logo:', e);
+    }
 
     doc.setFontSize(20);
     doc.setTextColor(49, 85, 58);
@@ -335,76 +294,85 @@ function generatePDF(d) {
 }
 
 /* ----------  ENVÍO A LA EMPRESA (Formspree)  ---------- */
-sendFormspree = async function (d) {
-    const body = new FormData();
-    body.append('company', d.company);
-    body.append('contactPerson', d.contactPerson);
-    body.append('email', d.email);
-    body.append('phone', d.phone);
-    body.append('country', d.country);
-    body.append('city', d.city);
-    body.append('address', d.address || '');
-    body.append('notes', d.notes || '');
-    body.append('total', `$${d.total.toLocaleString('es-CL')}`);
-
-    let detalle = 'DETALLE DE PRODUCTOS:\n\n';
-    d.products.forEach((p, i) => {
-        detalle += `${i+1}. ${p.name} | ${p.quantity} ${p.unit} | $${p.price} | sub $${p.subtotal}\n`;
-    });
-    body.append('products', detalle);
-    body.append('_subject', `Nueva cotización de ${d.company}`);
-    body.append('_replyto', d.email);
-
+async function sendFormspree(d) {
     try {
-        const r = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
-            method: 'POST',
-            body,
-            headers: { Accept: 'application/json' }
+        const formData = new FormData();
+        
+        // Campos estándar
+        formData.append('empresa', d.company);
+        formData.append('persona_contacto', d.contactPerson);
+        formData.append('email', d.email);
+        formData.append('telefono', d.phone);
+        formData.append('pais', d.country);
+        formData.append('ciudad', d.city);
+        formData.append('direccion', d.address || '');
+        formData.append('notas', d.notes || '');
+        formData.append('total', `$${d.total.toLocaleString('es-CL')}`);
+        
+        // Productos
+        let productosTexto = '';
+        d.products.forEach((p, i) => {
+            productosTexto += `${i+1}. ${p.name} - ${p.quantity} ${p.unit} - $${p.price} c/u - Subtotal: $${p.subtotal}\n`;
         });
-        if (!r.ok) throw new Error(r.statusText);
-        console.log('Correo empresa enviado');
-    } catch (e) {
-        console.error('Error Formspree:', e);
+        formData.append('productos', productosTexto);
+        
+        // Campos especiales de Formspree
+        formData.append('_subject', `Nueva Cotización - ${d.company}`);
+        formData.append('_replyto', d.email);
+        
+        const response = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+        
+        return await response.json();
+    } catch (error) {
+        console.error('Error enviando a Formspree:', error);
+        throw error;
     }
-};
+}
 
 /* ----------  COPIA AL CLIENTE (EmailJS)  ---------- */
-sendClientCopy = async function (d) {
-    const productsHTML = d.products.map((p, i) => `
-        <tr>
-            <td>${i+1}. ${p.name}</td>
-            <td>${p.quantity} ${p.unit}</td>
-            <td>$${p.price.toLocaleString('es-CL')}</td>
-            <td>$${p.subtotal.toLocaleString('es-CL')}</td>
-        </tr>`).join('');
-
-    const params = {
-        contact_person: d.contactPerson,
-        company: d.company,
-        email: d.email,
-        phone: d.phone,
-        country: d.country,
-        city: d.city,
-        products: productsHTML,
-        total: `$${d.total.toLocaleString('es-CL')}`,
-        notes: d.notes || 'Sin notas adicionales',
-        reply_to: 'info@exportcampos.cl',
-        subject: `Copia de cotización - ${d.company}`
-    };
-
-    const btn = document.querySelector('#quoteForm button[type="submit"]');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Enviando…';
-
+async function sendClientCopy(d) {
     try {
-        await emailjs.send('service_3bj2l7l', 'template_0nx6s7p', params);
-        alert('¡Cotización enviada! Revisá tu bandeja (incluido spam).');
-    } catch (err) {
-        console.error('EmailJS falló:', err);
-        alert('Se generó el PDF, pero no pudimos enviarte la copia. Te contactaremos en breve.');
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="bi bi-send me-2"></i>Enviar Solicitud de Cotización';
-        window.location.href = '../quote-thankyou.html';
+        // Formatear productos para EmailJS
+        let productsHTML = '';
+        d.products.forEach((p, i) => {
+            productsHTML += `
+                <tr>
+                    <td>${i+1}. ${p.name}</td>
+                    <td>${p.quantity} ${p.unit}</td>
+                    <td>$${p.price.toLocaleString('es-CL')}</td>
+                    <td>$${p.subtotal.toLocaleString('es-CL')}</td>
+                </tr>`;
+        });
+
+        const params = {
+            contact_person: d.contactPerson,
+            company: d.company,
+            email: d.email,
+            phone: d.phone,
+            country: d.country,
+            city: d.city,
+            address: d.address || 'No especificada',
+            products: productsHTML,
+            total: `$${d.total.toLocaleString('es-CL')}`,
+            notes: d.notes || 'Sin notas adicionales',
+            reply_to: 'info@exportcampos.cl',
+            subject: `Copia de su cotización - ${d.company}`
+        };
+
+        const response = await emailjs.send('service_3bj2l7l','template_0nx6s7p', params);
+        return response;
+    } catch (error) {
+        console.error('Error enviando copia al cliente:', error);
+        throw error;
     }
-};
+}
