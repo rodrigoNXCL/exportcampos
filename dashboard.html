@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Analytics - ExportCampos</title>
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GT-MBH4V6TZ');</script>
+    <!-- End Google Tag Manager -->
+    
+    <style>
+        :root {
+            --primary-color: #31553a;
+            --secondary-color: #6a9175;
+            --light-color: #f5f9f7;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f9f7 0%, #e8f0ec 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(49, 85, 58, 0.1);
+            text-align: center;
+        }
+        
+        .logo {
+            width: 180px;
+            margin-bottom: 20px;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            background: var(--secondary-color);
+        }
+        
+        .dashboard {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .analytics-embed {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .analytics-embed iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+        }
+        
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .date-selector {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .date-selector select {
+            padding: 8px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin: 0 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .analytics-embed iframe {
+                height: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GT-MBH4V6TZ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Login Section -->
+    <div id="loginSection" class="login-container">
+        <img src="assets/img/tu-logo_6_5 (sf).png" alt="ExportCampos" class="logo">
+        <h2 style="color: var(--primary-color); margin-bottom: 30px;">Dashboard Analytics</h2>
+        <div class="login-form">
+            <input type="password" id="password" placeholder="Ingrese la contraseña de acceso">
+            <button class="login-btn" onclick="checkPassword()">Acceder al Dashboard</button>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="dashboard">
+        <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+        
+        <div class="dashboard-header">
+            <h1 style="color: var(--primary-color);">📊 Dashboard Analytics ExportCampos</h1>
+            <p style="color: #666; margin-top: 10px;">Estadísticas en tiempo real de tráfico y conversiones</p>
+            
+            <div class="date-selector">
+                <select id="timeRange" onchange="updateTimeRange()">
+                    <option value="today">Hoy</option>
+                    <option value="yesterday">Ayer</option>
+                    <option value="7days" selected>Últimos 7 días</option>
+                    <option value="30days">Últimos 30 días</option>
+                    <option value="90days">Últimos 90 días</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Usuarios</div>
+                <div class="stat-number" id="usersCount">-</div>
+                <div class="stat-change" id="usersChange">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Sesiones</div>
+                <div class="stat-number" id="sessionsCount">-</div>
+                <div class="stat-change" id="sessionsChange">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Tasa de Rebote</div>
+                <div class="stat-number" id="bounceRate">-</div>
+                <div class="stat-change" id="bounceChange">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Cotizaciones</div>
+                <div class="stat-number" id="quotesCount">-</div>
+                <div class="stat-change" id="quotesChange">-</div>
+            </div>
+        </div>
+
+        <div class="analytics-embed">
+            <!-- Aquí va el embed de Google Analytics o Looker Studio -->
+            <div id="gaEmbed">
+                <div style="padding: 40px; text-align: center; color: #666;">
+                    <h3>Dashboard de Google Analytics</h3>
+                    <p>Conecta tu cuenta de Google Analytics para ver los datos aquí</p>
+                    <p><small>Puedes usar Looker Studio para crear dashboards personalizados</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración - CAMBIA ESTA CONTRASEÑA
+        const DASHBOARD_PASSWORD = 'ExportCampos2025';
+        const DASHBOARD_KEY = 'dashboard_authenticated';
+        
+        // Verificar si ya está autenticado
+        function checkAuth() {
+            const isAuthenticated = localStorage.getItem(DASHBOARD_KEY);
+            if (isAuthenticated) {
+                showDashboard();
+            }
+        }
+        
+        // Verificar contraseña
+        function checkPassword() {
+            const input = document.getElementById('password').value;
+            if (input === DASHBOARD_PASSWORD) {
+                localStorage.setItem(DASHBOARD_KEY, 'true');
+                showDashboard();
+                // Track login exitoso
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'dashboard_login', {
+                        event_category: 'admin',
+                        event_label: 'dashboard_access'
+                    });
+                }
+            } else {
+                alert('Contraseña incorrecta. Por favor, intente nuevamente.');
+                // Track intento fallido
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'dashboard_login_failed', {
+                        event_category: 'admin',
+                        event_label: 'failed_attempt'
+                    });
+                }
+            }
+        }
+        
+        // Mostrar dashboard
+        function showDashboard() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            loadDashboardData();
+        }
+        
+        // Cerrar sesión
+        function logout() {
+            localStorage.removeItem(DASHBOARD_KEY);
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('password').value = '';
+        }
+        
+        // Cargar datos del dashboard
+        function loadDashboardData() {
+            // Datos de ejemplo - en producción conectarías con la API de GA4
+            const stats = {
+                users: '1,247',
+                sessions: '1,543',
+                bounceRate: '42.3%',
+                quotes: '89'
+            };
+            
+            document.getElementById('usersCount').textContent = stats.users;
+            document.getElementById('sessionsCount').textContent = stats.sessions;
+            document.getElementById('bounceRate').textContent = stats.bounceRate;
+            document.getElementById('quotesCount').textContent = stats.quotes;
+            
+            // Simular cambios
+            document.querySelectorAll('.stat-change').forEach(el => {
+                const change = Math.random() > 0.5 ? '+' + (Math.random() * 15).toFixed(1) + '%' : '-' + (Math.random() * 10).toFixed(1) + '%';
+                el.textContent = change;
+                el.style.color = change.startsWith('+') ? '#28a745' : '#dc3545';
+            });
+        }
+        
+        // Actualizar rango de tiempo
+        function updateTimeRange() {
+            const range = document.getElementById('timeRange').value;
+            // Aquí actualizarías los datos según el rango seleccionado
+            console.log('Cambiando rango a:', range);
+            loadDashboardData(); // Recargar datos
+        }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            
+            // Enter para enviar contraseña
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
