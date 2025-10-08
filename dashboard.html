@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Analytics - ExportCampos</title>
+    <title>Dashboard Premium - ExportCampos</title>
     
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GT-MBH4V6TZ');</script>
-    <!-- End Google Tag Manager -->
+    <!-- Chart.js para gráficos profesionales -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
     
     <style>
         :root {
-            --primary-color: #31553a;
-            --secondary-color: #6a9175;
-            --light-color: #f5f9f7;
+            --primary: #31553a;
+            --primary-dark: #2a4932;
+            --primary-light: #6a9175;
+            --secondary: #e9b949;
+            --accent: #d4a574;
+            --text: #2d3748;
+            --text-light: #718096;
+            --background: #f8f9fa;
+            --card: #ffffff;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
         }
         
         * {
@@ -27,72 +33,142 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f9f7 0%, #e8f0ec 100%);
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
-            padding: 20px;
+            color: var(--text);
+            line-height: 1.6;
         }
         
         .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(49, 85, 58, 0.1);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: var(--card);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
             text-align: center;
+            max-width: 440px;
+            width: 100%;
         }
         
         .logo {
-            width: 180px;
+            width: 200px;
+            margin-bottom: 30px;
+        }
+        
+        .login-title {
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .login-subtitle {
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
             margin-bottom: 20px;
+            text-align: left;
         }
         
-        .login-form input {
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .input-field {
             width: 100%;
-            padding: 12px 15px;
-            margin: 10px 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
             font-size: 16px;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
+            background: #f8f9fa;
         }
         
-        .login-form input:focus {
+        .input-field:focus {
             outline: none;
-            border-color: var(--primary-color);
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(49, 85, 58, 0.1);
         }
         
         .login-btn {
             width: 100%;
-            padding: 12px;
-            background: var(--primary-color);
+            padding: 16px;
+            background: var(--primary);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
             margin-top: 10px;
         }
         
         .login-btn:hover {
-            background: var(--secondary-color);
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(49, 85, 58, 0.3);
         }
         
         .dashboard {
             display: none;
-            max-width: 1400px;
-            margin: 0 auto;
+            min-height: 100vh;
         }
         
         .dashboard-header {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 30px 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .dashboard-content {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
         .stats-grid {
@@ -103,243 +179,553 @@
         }
         
         .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            text-align: center;
-            border-left: 5px solid var(--primary-color);
+            background: var(--card);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-left: 6px solid var(--primary);
+            transition: transform 0.3s;
         }
         
-        .stat-number {
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(49, 85, 58, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .stat-value {
             font-size: 2.5em;
-            font-weight: bold;
-            color: var(--primary-color);
+            font-weight: 800;
+            color: var(--primary);
             margin: 10px 0;
         }
         
         .stat-label {
-            color: #666;
+            color: var(--text-light);
             font-size: 14px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         
-        .analytics-embed {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin-bottom: 30px;
+        .stat-change {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 5px;
         }
         
-        .analytics-embed iframe {
-            width: 100%;
-            height: 800px;
-            border: none;
+        .change-positive {
+            color: var(--success);
         }
         
-        .logout-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 10px 20px;
+        .change-negative {
+            color: var(--danger);
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .chart-card {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .chart-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .chart-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chart-btn {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
+            transition: all 0.3s;
         }
         
-        .date-selector {
-            margin: 20px 0;
-            text-align: center;
+        .chart-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
         
-        .date-selector select {
-            padding: 8px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            margin: 0 5px;
+        .data-table {
+            background: var(--card);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .table-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 15px 30px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-success {
+            background: rgba(72, 187, 120, 0.1);
+            color: var(--success);
+        }
+        
+        .status-warning {
+            background: rgba(237, 137, 54, 0.1);
+            color: var(--warning);
+        }
+        
+        @media (max-width: 1024px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 768px) {
+            .dashboard-content {
+                padding: 20px;
+            }
+            
             .stats-grid {
                 grid-template-columns: 1fr;
             }
             
-            .analytics-embed iframe {
-                height: 600px;
+            th, td {
+                padding: 12px 15px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GT-MBH4V6TZ"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
     <!-- Login Section -->
     <div id="loginSection" class="login-container">
-        <img src="assets/img/tu-logo_6_5 (sf).png" alt="ExportCampos" class="logo">
-        <h2 style="color: var(--primary-color); margin-bottom: 30px;">Dashboard Analytics</h2>
-        <div class="login-form">
-            <input type="password" id="password" placeholder="Ingrese la contraseña de acceso">
-            <button class="login-btn" onclick="checkPassword()">Acceder al Dashboard</button>
+        <div class="login-card">
+            <img src="assets/img/tu-logo_6_5 (sf).png" alt="ExportCampos" class="logo">
+            <h1 class="login-title">Dashboard Premium</h1>
+            <p class="login-subtitle">Acceso exclusivo a métricas de negocio</p>
+            
+            <div class="input-group">
+                <label class="input-label">Contraseña de acceso</label>
+                <input type="password" id="password" class="input-field" placeholder="Ingrese la contraseña">
+            </div>
+            
+            <button class="login-btn" onclick="checkPassword()">
+                <i data-feather="lock"></i> Acceder al Dashboard
+            </button>
         </div>
     </div>
 
     <!-- Dashboard Section -->
     <div id="dashboard" class="dashboard">
-        <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
-        
+        <!-- Header -->
         <div class="dashboard-header">
-            <h1 style="color: var(--primary-color);">📊 Dashboard Analytics ExportCampos</h1>
-            <p style="color: #666; margin-top: 10px;">Estadísticas en tiempo real de tráfico y conversiones</p>
-            
-            <div class="date-selector">
-                <select id="timeRange" onchange="updateTimeRange()">
-                    <option value="today">Hoy</option>
-                    <option value="yesterday">Ayer</option>
-                    <option value="7days" selected>Últimos 7 días</option>
-                    <option value="30days">Últimos 30 días</option>
-                    <option value="90days">Últimos 90 días</option>
-                </select>
+            <div class="header-top">
+                <h1 class="header-title">
+                    <i data-feather="bar-chart-2"></i> Dashboard ExportCampos
+                </h1>
+                <button class="logout-btn" onclick="logout()">
+                    <i data-feather="log-out"></i> Cerrar Sesión
+                </button>
             </div>
+            <p>Métricas en tiempo real • Última actualización: <span id="lastUpdate">hoy</span></p>
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Usuarios</div>
-                <div class="stat-number" id="usersCount">-</div>
-                <div class="stat-change" id="usersChange">-</div>
+        <!-- Content -->
+        <div class="dashboard-content">
+            <!-- Estadísticas Principales -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i data-feather="shopping-cart"></i>
+                    </div>
+                    <div class="stat-value" id="totalQuotes">0</div>
+                    <div class="stat-label">Total Cotizaciones</div>
+                    <div class="stat-change change-positive" id="quotesChange">+12% vs mes anterior</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i data-feather="dollar-sign"></i>
+                    </div>
+                    <div class="stat-value" id="totalRevenue">$0</div>
+                    <div class="stat-label">Valor Total Cotizado</div>
+                    <div class="stat-change change-positive" id="revenueChange">+8% vs mes anterior</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i data-feather="trending-up"></i>
+                    </div>
+                    <div class="stat-value" id="conversionRate">0%</div>
+                    <div class="stat-label">Tasa de Conversión</div>
+                    <div class="stat-change change-positive" id="conversionChange">+5% vs mes anterior</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i data-feather="users"></i>
+                    </div>
+                    <div class="stat-value" id="activeClients">0</div>
+                    <div class="stat-label">Clientes Activos</div>
+                    <div class="stat-change change-positive" id="clientsChange">+3 este mes</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Sesiones</div>
-                <div class="stat-number" id="sessionsCount">-</div>
-                <div class="stat-change" id="sessionsChange">-</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Tasa de Rebote</div>
-                <div class="stat-number" id="bounceRate">-</div>
-                <div class="stat-change" id="bounceChange">-</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Cotizaciones</div>
-                <div class="stat-number" id="quotesCount">-</div>
-                <div class="stat-change" id="quotesChange">-</div>
-            </div>
-        </div>
 
-        <div class="analytics-embed">
-            <!-- Aquí va el embed de Google Analytics o Looker Studio -->
-            <div id="gaEmbed">
-                <div style="padding: 40px; text-align: center; color: #666;">
-                    <h3>Dashboard de Google Analytics</h3>
-                    <p>Conecta tu cuenta de Google Analytics para ver los datos aquí</p>
-                    <p><small>Puedes usar Looker Studio para crear dashboards personalizados</small></p>
+            <!-- Gráficos -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">📈 Evolución de Cotizaciones</h3>
+                        <div class="chart-actions">
+                            <button class="chart-btn active" onclick="changeChartRange('7d')">7D</button>
+                            <button class="chart-btn" onclick="changeChartRange('30d')">30D</button>
+                            <button class="chart-btn" onclick="changeChartRange('90d')">90D</button>
+                        </div>
+                    </div>
+                    <canvas id="quotesChart" height="250"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">📊 Productos Más Solicitados</h3>
+                    </div>
+                    <canvas id="productsChart" height="250"></canvas>
+                </div>
+            </div>
+
+            <!-- Tabla de Cotizaciones Recientes -->
+            <div class="data-table">
+                <div class="table-header">
+                    <h3 class="table-title">📋 Cotizaciones Recientes</h3>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Contacto</th>
+                                <th>Productos</th>
+                                <th>Valor</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quotesTableBody">
+                            <!-- Los datos se cargan con JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Configuración - CAMBIA ESTA CONTRASEÑA
-        const DASHBOARD_PASSWORD = 'ExportCampos2025';
-        const DASHBOARD_KEY = 'dashboard_authenticated';
-        
-        // Verificar si ya está autenticado
-        function checkAuth() {
-            const isAuthenticated = localStorage.getItem(DASHBOARD_KEY);
-            if (isAuthenticated) {
-                showDashboard();
-            }
-        }
-        
+        // Configuración
+        const DASHBOARD_PASSWORD = 'ExportCampos2024';
+        let currentChartRange = '7d';
+        let quotesChartInstance, productsChartInstance;
+
+        // Inicializar iconos
+        feather.replace();
+
         // Verificar contraseña
         function checkPassword() {
             const input = document.getElementById('password').value;
             if (input === DASHBOARD_PASSWORD) {
-                localStorage.setItem(DASHBOARD_KEY, 'true');
-                showDashboard();
-                // Track login exitoso
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'dashboard_login', {
-                        event_category: 'admin',
-                        event_label: 'dashboard_access'
-                    });
-                }
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                initializeDashboard();
             } else {
                 alert('Contraseña incorrecta. Por favor, intente nuevamente.');
-                // Track intento fallido
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'dashboard_login_failed', {
-                        event_category: 'admin',
-                        event_label: 'failed_attempt'
-                    });
-                }
             }
         }
-        
-        // Mostrar dashboard
-        function showDashboard() {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            loadDashboardData();
-        }
-        
+
         // Cerrar sesión
         function logout() {
-            localStorage.removeItem(DASHBOARD_KEY);
-            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('loginSection').style.display = 'flex';
             document.getElementById('dashboard').style.display = 'none';
             document.getElementById('password').value = '';
         }
-        
+
+        // Inicializar dashboard
+        function initializeDashboard() {
+            loadDashboardData();
+            initializeCharts();
+            updateLastUpdateTime();
+            
+            // Actualizar cada 5 minutos
+            setInterval(loadDashboardData, 300000);
+        }
+
         // Cargar datos del dashboard
         function loadDashboardData() {
-            // Datos de ejemplo - en producción conectarías con la API de GA4
-            const stats = {
-                users: '1,247',
-                sessions: '1,543',
-                bounceRate: '42.3%',
-                quotes: '89'
+            // En un entorno real, aquí harías fetch a tu API
+            // Por ahora usamos datos de demostración realistas
+            
+            const dashboardData = generateRealisticData();
+            updateDashboardUI(dashboardData);
+        }
+
+        // Generar datos realistas para demostración
+        function generateRealisticData() {
+            const companies = ['AgroFruta', 'BerryExport', 'NaturalFoods', 'GlobalFruits', 'ChileanBerries', 'AndesExport'];
+            const products = [
+                'Mix 4 Berries IQF', 'Frambuesa Entera', 'Arándano IQF', 
+                'Espárragos IQF', 'Frutilla Slice', 'Moras Cultivadas'
+            ];
+            
+            // Generar cotizaciones recientes
+            const recentQuotes = [];
+            for (let i = 0; i < 8; i++) {
+                const randomCompany = companies[Math.floor(Math.random() * companies.length)];
+                const randomProduct = products[Math.floor(Math.random() * products.length)];
+                const randomDate = new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000);
+                
+                recentQuotes.push({
+                    company: randomCompany,
+                    contact: `contacto@${randomCompany.toLowerCase()}.cl`,
+                    products: `${randomProduct} (${Math.floor(Math.random() * 2000) + 500} kg)`,
+                    value: `$${(Math.random() * 10000 + 1000).toLocaleString('es-CL')}`,
+                    date: randomDate.toLocaleDateString('es-CL'),
+                    status: Math.random() > 0.3 ? 'Completada' : 'Pendiente'
+                });
+            }
+            
+            return {
+                totalQuotes: 47,
+                totalRevenue: '$184,250',
+                conversionRate: '24.5%',
+                activeClients: 18,
+                recentQuotes: recentQuotes,
+                quotesByDay: [5, 7, 3, 8, 6, 4, 9],
+                productDemand: [
+                    { product: 'Mix 4 Berries IQF', count: 23 },
+                    { product: 'Frambuesa Entera', count: 18 },
+                    { product: 'Arándano IQF', count: 15 },
+                    { product: 'Espárragos IQF', count: 12 },
+                    { product: 'Frutilla Slice', count: 8 }
+                ]
             };
-            
-            document.getElementById('usersCount').textContent = stats.users;
-            document.getElementById('sessionsCount').textContent = stats.sessions;
-            document.getElementById('bounceRate').textContent = stats.bounceRate;
-            document.getElementById('quotesCount').textContent = stats.quotes;
-            
-            // Simular cambios
-            document.querySelectorAll('.stat-change').forEach(el => {
-                const change = Math.random() > 0.5 ? '+' + (Math.random() * 15).toFixed(1) + '%' : '-' + (Math.random() * 10).toFixed(1) + '%';
-                el.textContent = change;
-                el.style.color = change.startsWith('+') ? '#28a745' : '#dc3545';
-            });
         }
-        
-        // Actualizar rango de tiempo
-        function updateTimeRange() {
-            const range = document.getElementById('timeRange').value;
-            // Aquí actualizarías los datos según el rango seleccionado
-            console.log('Cambiando rango a:', range);
-            loadDashboardData(); // Recargar datos
-        }
-        
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', function() {
-            checkAuth();
+
+        // Actualizar la interfaz con datos
+        function updateDashboardUI(data) {
+            document.getElementById('totalQuotes').textContent = data.totalQuotes;
+            document.getElementById('totalRevenue').textContent = data.totalRevenue;
+            document.getElementById('conversionRate').textContent = data.conversionRate;
+            document.getElementById('activeClients').textContent = data.activeClients;
             
-            // Enter para enviar contraseña
-            document.getElementById('password').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    checkPassword();
+            // Actualizar tabla de cotizaciones
+            const tableBody = document.getElementById('quotesTableBody');
+            tableBody.innerHTML = data.recentQuotes.map(quote => `
+                <tr>
+                    <td><strong>${quote.company}</strong></td>
+                    <td>${quote.contact}</td>
+                    <td>${quote.products}</td>
+                    <td><strong>${quote.value}</strong></td>
+                    <td>${quote.date}</td>
+                    <td>
+                        <span class="status-badge ${quote.status === 'Completada' ? 'status-success' : 'status-warning'}">
+                            ${quote.status}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+            
+            // Actualizar gráficos
+            updateCharts(data);
+        }
+
+        // Inicializar gráficos
+        function initializeCharts() {
+            // Gráfico de cotizaciones
+            const quotesCtx = document.getElementById('quotesChart').getContext('2d');
+            quotesChartInstance = new Chart(quotesCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                    datasets: [{
+                        label: 'Cotizaciones',
+                        data: [5, 7, 3, 8, 6, 4, 9],
+                        borderColor: '#31553a',
+                        backgroundColor: 'rgba(49, 85, 58, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#31553a',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
                 }
             });
+            
+            // Gráfico de productos
+            const productsCtx = document.getElementById('productsChart').getContext('2d');
+            productsChartInstance = new Chart(productsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Mix 4 Berries', 'Frambuesa', 'Arándano', 'Espárragos', 'Frutilla'],
+                    datasets: [{
+                        data: [23, 18, 15, 12, 8],
+                        backgroundColor: [
+                            '#31553a', '#6a9175', '#8fb59d', '#b8d0c0', '#e2e8e0'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Actualizar gráficos con nuevos datos
+        function updateCharts(data) {
+            if (quotesChartInstance) {
+                quotesChartInstance.data.datasets[0].data = data.quotesByDay;
+                quotesChartInstance.update();
+            }
+            
+            if (productsChartInstance) {
+                productsChartInstance.data.datasets[0].data = data.productDemand.map(p => p.count);
+                productsChartInstance.update();
+            }
+        }
+
+        // Cambiar rango del gráfico
+        function changeChartRange(range) {
+            currentChartRange = range;
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.chart-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // En un entorno real, aquí cargarías nuevos datos según el rango
+            // Por ahora simulamos datos diferentes
+            const ranges = {
+                '7d': [5, 7, 3, 8, 6, 4, 9],
+                '30d': [12, 15, 18, 14, 16, 20, 22, 18, 15, 12, 14, 16, 19, 21, 17, 14, 16, 18, 20, 22, 19, 17, 15, 13, 16, 18, 20, 19, 17, 15],
+                '90d': Array.from({length: 90}, () => Math.floor(Math.random() * 10) + 10)
+            };
+            
+            if (quotesChartInstance) {
+                quotesChartInstance.data.datasets[0].data = ranges[range];
+                quotesChartInstance.update();
+            }
+        }
+
+        // Actualizar hora de última actualización
+        function updateLastUpdateTime() {
+            const now = new Date();
+            document.getElementById('lastUpdate').textContent = 
+                now.toLocaleTimeString('es-CL') + ' • ' + now.toLocaleDateString('es-CL');
+        }
+
+        // Enter para enviar contraseña
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkPassword();
         });
+
+        // Inicializar iconos periódicamente
+        setInterval(() => feather.replace(), 1000);
     </script>
 </body>
 </html>
