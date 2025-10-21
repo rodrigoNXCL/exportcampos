@@ -413,7 +413,8 @@
         // CONFIGURACIÓN INICIAL - nxchile.com
         // ===================================================================
         const DASHBOARD_PASSWORD = 'ExportCampos2025';
-        const GOATCOUNTER_SITE = 'exportcampos'; // Tu subdominio en goatcounter.com
+        const GOATCOUNTER_SITE = 'exportcampos';
+        const GOATCOUNTER_SECRET_TOKEN = '2c1222175514dq31i5k20h5m3y6k1y4syd'; // Tu token secreto
         let visitsChartInstance, pagesChartInstance;
 
         // Inicializar iconos de Feather
@@ -451,19 +452,21 @@
         }
 
         // ===================================================================
-        // CARGAR MÉTRICAS REALES DESDE GOATCOUNTER (100% GRATIS)
+        // CARGAR MÉTRICAS REALES DESDE GOATCOUNTER (CON TOKEN SECRETO)
         // ===================================================================
         async function loadRealMetrics() {
-            const apiUrl = `https://${GOATCOUNTER_SITE}.goatcounter.com/api/v0/stats`;
+            const apiUrl = `https://${GOATCOUNTER_SITE}.goatcounter.com/api/v0/stats?access-token=${GOATCOUNTER_SECRET_TOKEN}`;
+
             try {
                 const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error('API no disponible');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
                 const data = await response.json();
                 const processed = processGoatCounterData(data);
                 updateDashboardUI(processed);
             } catch (error) {
-                console.warn('Error al cargar datos reales:', error);
-                // Fallback: mostrar mensaje o datos simulados si falla
+                console.error('❌ Error al cargar métricas:', error);
                 alert('No se pudieron cargar las métricas. Verifique la conexión.');
             }
         }
@@ -495,13 +498,12 @@
             const topPage = topPages.length > 0 ? topPages[0].path : '/';
 
             // Simular dispositivos (GoatCounter no los da en API pública)
-            // En un futuro, podrías usar eventos personalizados
             const desktop = Math.floor(totalVisitors * 0.65);
             const mobile = totalVisitors - desktop;
 
             return {
                 totalVisitors,
-                totalPageviews: totalVisitors, // GoatCounter cuenta visitas como pageviews
+                totalPageviews: totalVisitors,
                 topPage,
                 dailyVisits,
                 topPages,
@@ -616,7 +618,6 @@
         // FUNCIONES AUXILIARES
         // ===================================================================
         function changeChartRange(range) {
-            // Solo soportamos 7d por ahora (GoatCounter API pública limitada)
             document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
         }
