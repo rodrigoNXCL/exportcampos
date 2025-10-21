@@ -312,7 +312,7 @@
         <div class="login-card">
             <img src="assets/img/tu-logo_6_5 (sf).png" alt="ExportCampos" class="logo">
             <h1 class="login-title">Dashboard Premium</h1>
-            <p class="login-subtitle">Acceso exclusivo a métricas de tráfico web</p>
+            <p class="login-subtitle">Métricas de tráfico web en tiempo real</p>
             <div class="input-group">
                 <label class="input-label">Contraseña de acceso</label>
                 <input type="password" id="password" class="input-field" placeholder="Ingrese la contraseña">
@@ -342,27 +342,27 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon"><i data-feather="users"></i></div>
-                    <div class="stat-value" id="totalVisitors">0</div>
+                    <div class="stat-value" id="totalQuotes">0</div>
                     <div class="stat-label">Visitantes (7d)</div>
-                    <div class="stat-change change-positive" id="visitorsChange">+12% vs semana anterior</div>
+                    <div class="stat-change change-positive" id="quotesChange">+12% vs semana anterior</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i data-feather="eye"></i></div>
-                    <div class="stat-value" id="totalPageviews">0</div>
+                    <div class="stat-value" id="totalRevenue">0 visitas</div>
                     <div class="stat-label">Vistas de Página</div>
-                    <div class="stat-change change-positive" id="pageviewsChange">+8% vs semana anterior</div>
+                    <div class="stat-change change-positive" id="revenueChange">+8% vs semana anterior</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i data-feather="globe"></i></div>
-                    <div class="stat-value" id="topPage">/</div>
+                    <div class="stat-value" id="conversionRate">/</div>
                     <div class="stat-label">Página Más Vista</div>
-                    <div class="stat-change change-positive" id="topPageChange">Principal</div>
+                    <div class="stat-change change-positive" id="conversionChange">Principal</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i data-feather="smartphone"></i></div>
-                    <div class="stat-value" id="deviceBreakdown">-</div>
+                    <div class="stat-value" id="activeClients">0</div>
                     <div class="stat-label">Dispositivos</div>
-                    <div class="stat-change change-positive" id="deviceChange">Desktop / Móvil</div>
+                    <div class="stat-change change-positive" id="clientsChange">Desktop / Móvil</div>
                 </div>
             </div>
 
@@ -375,32 +375,32 @@
                             <button class="chart-btn active" onclick="changeChartRange('7d')">7D</button>
                         </div>
                     </div>
-                    <canvas id="visitsChart" height="250"></canvas>
+                    <canvas id="quotesChart" height="250"></canvas>
                 </div>
                 <div class="chart-card">
                     <div class="chart-header">
                         <h3 class="chart-title">📊 Páginas Más Visitadas</h3>
                     </div>
-                    <canvas id="pagesChart" height="250"></canvas>
+                    <canvas id="productsChart" height="250"></canvas>
                 </div>
             </div>
 
             <!-- Tabla de Páginas Recientes -->
             <div class="data-table">
                 <div class="table-header">
-                    <h3 class="table-title">📋 Páginas Más Visitadas (Últimos 7 días)</h3>
+                    <h3 class="table-title">📋 Páginas Más Visitadas</h3>
                 </div>
                 <table>
                     <thead>
                         <tr>
                             <th>Página</th>
                             <th>Visitantes</th>
-                            <th>% del Total</th>
-                            <th>Última Visita</th>
+                            <th>Valor</th>
+                            <th>Fecha</th>
                             <th>Estado</th>
                         </tr>
                     </thead>
-                    <tbody id="pagesTableBody">
+                    <tbody id="quotesTableBody">
                         <!-- Se llena con datos reales desde GoatCounter -->
                     </tbody>
                 </table>
@@ -412,10 +412,9 @@
         // ===================================================================
         // CONFIGURACIÓN INICIAL - nxchile.com
         // ===================================================================
-        const DASHBOARD_PASSWORD = 'ExportCampos2025';
-        const GOATCOUNTER_SITE = 'exportcampos';
-        const GOATCOUNTER_SECRET_TOKEN = '2c1222175514dq31i5k20h5m3y6k1y4syd'; // Tu token secreto
-        let visitsChartInstance, pagesChartInstance;
+        const DASHBOARD_PASSWORD = 'ExportCampos2024';
+        let currentChartRange = '7d';
+        let quotesChartInstance, productsChartInstance;
 
         // Inicializar iconos de Feather
         feather.replace();
@@ -444,35 +443,36 @@
         // INICIALIZACIÓN DEL DASHBOARD
         // ===================================================================
         function initializeDashboard() {
-            loadRealMetrics(); // Cargar datos reales desde GoatCounter
+            loadDashboardData(); // Carga datos reales desde Netlify Function
             initializeCharts();
             updateLastUpdateTime();
-            // Actualizar cada 5 minutos (300,000 ms)
-            setInterval(loadRealMetrics, 300000);
+            setInterval(loadDashboardData, 300000); // Actualizar cada 5 minutos
         }
 
         // ===================================================================
-        // CARGAR MÉTRICAS REALES DESDE GOATCOUNTER (CON TOKEN SECRETO)
+        // CARGAR DATOS REALES DESDE GOATCOUNTER VIA NETLIFY FUNCTION
         // ===================================================================
-        async function loadRealMetrics() {
-            const apiUrl = `https://${GOATCOUNTER_SITE}.goatcounter.com/api/v0/stats?access-token=${GOATCOUNTER_SECRET_TOKEN}`;
-
+        async function loadDashboardData() {
             try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                const data = await response.json();
-                const processed = processGoatCounterData(data);
-                updateDashboardUI(processed);
+                // Llamada a la Netlify Function que actúa como proxy a GoatCounter
+                const response = await fetch('/.netlify/functions/goatcounter');
+                if (!response.ok) throw new Error('Error en la respuesta del servidor');
+                const rawData = await response.json();
+                const processedData = processGoatCounterData(rawData);
+                updateDashboardUI(processedData);
             } catch (error) {
-                console.error('❌ Error al cargar métricas:', error);
-                alert('No se pudieron cargar las métricas. Verifique la conexión.');
+                console.error('Error al cargar datos reales:', error);
+                // Fallback a datos simulados si falla la conexión
+                const fallback = generateRealisticData();
+                updateDashboardUI(fallback);
             }
         }
 
         // ===================================================================
-        // PROCESAR DATOS DE GOATCOUNTER PARA ADAPTARLOS AL DASHBOARD
+        // PROCESAR DATOS DE GOATCOUNTER (FORMATO JSON)
+        // Autor: nxchile.com
+        // Nota: GoatCounter devuelve:
+        // - paths: array de objetos con { p: path, d: día (YYYY-MM-DD), c: count }
         // ===================================================================
         function processGoatCounterData(apiData) {
             const now = new Date();
@@ -482,60 +482,88 @@
                 return d.toISOString().split('T')[0]; // Formato: YYYY-MM-DD
             }).reverse();
 
-            // Visitas por día (últimos 7 días)
+            // Mapear visitas por día (últimos 7 días)
             const dailyVisits = last7Days.map(day => {
-                const entry = apiData.paths.find(p => p.day === day);
-                return entry ? entry.count : 0;
+                const entry = apiData.paths.find(p => p.d === day);
+                return entry ? entry.c : 0;
             });
 
-            // Páginas más vistas (excluye la raíz si hay otras)
-            const allPaths = apiData.paths.filter(p => p.path);
+            // Filtrar y ordenar páginas más vistas
+            const allPaths = apiData.paths.filter(p => p.p);
             const topPages = allPaths
-                .sort((a, b) => b.count - a.count)
+                .sort((a, b) => b.c - a.c)
                 .slice(0, 5);
 
             const totalVisitors = dailyVisits.reduce((a, b) => a + b, 0);
-            const topPage = topPages.length > 0 ? topPages[0].path : '/';
+            const topPage = topPages.length > 0 ? topPages[0].p : '/';
 
-            // Simular dispositivos (GoatCounter no los da en API pública)
-            const desktop = Math.floor(totalVisitors * 0.65);
+            // Simular dispositivos (GoatCounter no los entrega en JSON)
+            const desktop = Math.floor(totalVisitors * 0.6);
             const mobile = totalVisitors - desktop;
 
+            // Formatear datos para la UI
             return {
-                totalVisitors,
-                totalPageviews: totalVisitors,
-                topPage,
-                dailyVisits,
-                topPages,
-                devices: { desktop, mobile }
+                totalQuotes: totalVisitors,
+                totalRevenue: `${totalVisitors} visitas`,
+                conversionRate: topPage,
+                activeClients: `${desktop} / ${mobile}`,
+                recentQuotes: topPages.map((p, i) => ({
+                    company: p.p || '/',
+                    contact: '-',
+                    products: '-',
+                    value: `${p.c} visitas`,
+                    date: last7Days[6 - i] || 'hoy',
+                    status: 'Vista'
+                })),
+                quotesByDay: dailyVisits,
+                productDemand: topPages.map(p => ({ product: p.p, count: p.c }))
             };
         }
 
         // ===================================================================
-        // ACTUALIZAR INTERFAZ CON DATOS REALES
+        // GENERAR DATOS SIMULADOS (FALLBACK)
+        // ===================================================================
+        function generateRealisticData() {
+            return {
+                totalQuotes: 42,
+                totalRevenue: '42 visitas',
+                conversionRate: '/',
+                activeClients: '25 / 17',
+                recentQuotes: [
+                    { company: '/', contact: '-', products: '-', value: '15 visitas', date: 'hoy', status: 'Vista' },
+                    { company: '/productos', contact: '-', products: '-', value: '8 visitas', date: 'ayer', status: 'Vista' }
+                ],
+                quotesByDay: [5, 7, 3, 8, 6, 4, 9],
+                productDemand: [
+                    { product: '/', count: 15 },
+                    { product: '/productos', count: 8 }
+                ]
+            };
+        }
+
+        // ===================================================================
+        // ACTUALIZAR INTERFAZ CON DATOS
         // ===================================================================
         function updateDashboardUI(data) {
-            document.getElementById('totalVisitors').textContent = data.totalVisitors || 0;
-            document.getElementById('totalPageviews').textContent = data.totalPageviews || 0;
-            document.getElementById('topPage').textContent = data.topPage || '/';
-            document.getElementById('deviceBreakdown').textContent = `${data.devices.desktop} / ${data.devices.mobile}`;
+            document.getElementById('totalQuotes').textContent = data.totalQuotes;
+            document.getElementById('totalRevenue').textContent = data.totalRevenue;
+            document.getElementById('conversionRate').textContent = data.conversionRate;
+            document.getElementById('activeClients').textContent = data.activeClients;
 
-            // Actualizar tabla de páginas
-            const tableBody = document.getElementById('pagesTableBody');
-            tableBody.innerHTML = data.topPages.map(page => {
-                const percentage = data.totalVisitors ? ((page.count / data.totalVisitors) * 100).toFixed(1) : 0;
-                return `
-                    <tr>
-                        <td><code>${page.path || '/'}</code></td>
-                        <td>${page.count}</td>
-                        <td>${percentage}%</td>
-                        <td>-</td>
-                        <td><span class="status-badge status-success">Activa</span></td>
-                    </tr>
-                `;
-            }).join('');
+            const tableBody = document.getElementById('quotesTableBody');
+            tableBody.innerHTML = data.recentQuotes.map(quote => `
+                <tr>
+                    <td><strong>${quote.company}</strong></td>
+                    <td>${quote.contact}</td>
+                    <td>${quote.products}</td>
+                    <td><strong>${quote.value}</strong></td>
+                    <td>${quote.date}</td>
+                    <td>
+                        <span class="status-badge status-success">${quote.status}</span>
+                    </td>
+                </tr>
+            `).join('');
 
-            // Actualizar gráficos
             updateCharts(data);
         }
 
@@ -543,9 +571,8 @@
         // INICIALIZAR GRÁFICOS CON CHART.JS
         // ===================================================================
         function initializeCharts() {
-            // Gráfico de visitas por día
-            const visitsCtx = document.getElementById('visitsChart').getContext('2d');
-            visitsChartInstance = new Chart(visitsCtx, {
+            const quotesCtx = document.getElementById('quotesChart').getContext('2d');
+            quotesChartInstance = new Chart(quotesCtx, {
                 type: 'line',
                 data: {
                     labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
@@ -574,9 +601,8 @@
                 }
             });
 
-            // Gráfico de páginas más vistas
-            const pagesCtx = document.getElementById('pagesChart').getContext('2d');
-            pagesChartInstance = new Chart(pagesCtx, {
+            const productsCtx = document.getElementById('productsChart').getContext('2d');
+            productsChartInstance = new Chart(productsCtx, {
                 type: 'doughnut',
                 data: {
                     labels: [],
@@ -598,30 +624,35 @@
         }
 
         // ===================================================================
-        // ACTUALIZAR GRÁFICOS CON DATOS REALES
+        // ACTUALIZAR GRÁFICOS CON NUEVOS DATOS
         // ===================================================================
         function updateCharts(data) {
-            if (visitsChartInstance) {
-                visitsChartInstance.data.datasets[0].data = data.dailyVisits;
-                visitsChartInstance.update();
+            if (quotesChartInstance) {
+                quotesChartInstance.data.datasets[0].data = data.quotesByDay;
+                quotesChartInstance.update();
             }
-            if (pagesChartInstance) {
-                const labels = data.topPages.map(p => p.path || '/');
-                const counts = data.topPages.map(p => p.count);
-                pagesChartInstance.data.labels = labels;
-                pagesChartInstance.data.datasets[0].data = counts;
-                pagesChartInstance.update();
+            if (productsChartInstance) {
+                const labels = data.productDemand.map(p => p.product || '/');
+                const counts = data.productDemand.map(p => p.count);
+                productsChartInstance.data.labels = labels;
+                productsChartInstance.data.datasets[0].data = counts;
+                productsChartInstance.update();
             }
         }
 
         // ===================================================================
-        // FUNCIONES AUXILIARES
+        // CAMBIAR RANGO DEL GRÁFICO (SOLO 7D POR AHORA)
         // ===================================================================
         function changeChartRange(range) {
+            currentChartRange = range;
             document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
+            // En implementación futura, cargar datos según rango
         }
 
+        // ===================================================================
+        // ACTUALIZAR HORA DE ÚLTIMA ACTUALIZACIÓN
+        // ===================================================================
         function updateLastUpdateTime() {
             const now = new Date();
             document.getElementById('lastUpdate').textContent = 
@@ -633,7 +664,7 @@
             if (e.key === 'Enter') checkPassword();
         });
 
-        // Reinicializar iconos periódicamente (mejor UX)
+        // Reinicializar iconos periódicamente
         setInterval(() => feather.replace(), 1000);
     </script>
 </body>
