@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExportCampos - En Mantenimiento</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .maintenance-container {
+            background: white;
+            border-radius: 24px;
+            padding: 60px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .maintenance-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #31553a, #6a9175, #31553a);
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .logo { width: 200px; margin-bottom: 30px; }
+        .maintenance-icon { font-size: 72px; margin-bottom: 20px; display: inline-block; animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        h1 { color: #31553a; font-size: 36px; font-weight: 800; margin-bottom: 16px; }
+        .subtitle { color: #6a9175; font-size: 20px; font-weight: 600; margin-bottom: 24px; }
+        .message { color: #718096; font-size: 18px; line-height: 1.7; margin-bottom: 32px; }
+        .status-card { background: #f8f9fa; border-radius: 16px; padding: 24px; margin: 24px 0; display: inline-block; min-width: 200px; }
+        .status-badge { display: inline-flex; align-items: center; gap: 10px; background: #fed7d7; color: #9b2c2c; padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 14px; }
+        .status-dot { width: 10px; height: 10px; background: #e53e3e; border-radius: 50%; display: inline-block; animation: blink 1.5s ease-in-out infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+        .return-date { display: inline-block; background: #31553a; color: white; padding: 12px 32px; border-radius: 12px; font-weight: 700; font-size: 18px; margin-top: 16px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 32px 0; }
+        .info-item { background: #f8f9fa; padding: 20px; border-radius: 12px; }
+        .info-item .icon { font-size: 28px; margin-bottom: 8px; }
+        .info-item .label { color: #718096; font-size: 14px; }
+        .info-item .value { color: #31553a; font-weight: 700; font-size: 16px; margin-top: 4px; }
+        .contact-email { color: #31553a; font-weight: 600; text-decoration: none; border-bottom: 2px solid #e2e8f0; transition: border-color 0.3s; }
+        .contact-email:hover { border-color: #31553a; }
+        .footer-text { margin-top: 32px; color: #a0aec0; font-size: 14px; border-top: 1px solid #e2e8f0; padding-top: 32px; }
+        @media (max-width: 768px) {
+            .maintenance-container { padding: 40px 24px; }
+            .info-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 28px; }
+            .subtitle { font-size: 18px; }
+        }
+        @media (max-width: 480px) {
+            .maintenance-container { padding: 30px 16px; }
+            .logo { width: 150px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="maintenance-container">
+        <img src="https://exportcampos.cl/wp-content/uploads/2023/11/Logo-Export-Campos-2.png" alt="ExportCampos" class="logo">
+        <div class="maintenance-icon">🔧</div>
+        <h1>En Mantenimiento</h1>
+        <p class="subtitle">Preparando la nueva temporada</p>
+        <p class="message">
+            Estamos trabajando en la renovación de nuestro catálogo y plataforma 
+            para ofrecerte los mejores productos de la nueva temporada. 
+            <br><br>
+            ¡Pronto estaremos de vuelta con novedades increíbles!
+        </p>
+        <div class="status-card">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                Sitio en mantenimiento programado
+            </div>
+        </div>
+        <div class="return-date">🗓️ Regresamos: Septiembre 2025</div>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="icon">📧</div>
+                <div class="label">Contacto</div>
+                <div class="value"><a href="mailto:info@exportcampos.cl" class="contact-email">info@exportcampos.cl</a></div>
+            </div>
+            <div class="info-item">
+                <div class="icon">📱</div>
+                <div class="label">Teléfono</div>
+                <div class="value">+56 9 3436 5048</div>
+            </div>
+            <div class="info-item">
+                <div class="icon">🌐</div>
+                <div class="label">Horario</div>
+                <div class="value">Lun - Vie, 9:00 - 18:00</div>
+            </div>
+        </div>
+        <div class="footer-text">
+            © 2025 Exportadora de Berries Wilson Campos SpA. Todos los derechos reservados.
+        </div>
+    </div>
+</body>
+</html>

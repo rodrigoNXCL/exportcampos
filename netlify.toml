@@ -1,0 +1,59 @@
+[build]
+  publish = "."
+  command = ""
+
+# Redirigir todo a mantenimiento
+[[redirects]]
+  from = "/*"
+  to = "/maintenance.html"
+  status = 200
+
+# Excepciones para archivos estáticos
+[[redirects]]
+  from = "/*.css"
+  to = "/maintenance.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*.js"
+  to = "/maintenance.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*.png"
+  to = "/maintenance.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*.jpg"
+  to = "/maintenance.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*.svg"
+  to = "/maintenance.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*.webp"
+  to = "/maintenance.html"
+  status = 200
+  force = true
+
+# Excepción para el logo
+[[redirects]]
+  from = "/wp-content/uploads/2023/11/Logo-Export-Campos-2.png"
+  to = "/wp-content/uploads/2023/11/Logo-Export-Campos-2.png"
+  status = 200
+
+# Redirigir .com a .cl
+[[redirects]]
+  from = "https://exportcampos.com/*"
+  to = "https://exportcampos.cl/:splat"
+  status = 301
+  force = true
