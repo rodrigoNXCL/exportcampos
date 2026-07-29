@@ -2,6 +2,13 @@
   publish = "."
   command = ""
 
+[build.environment]
+  NODE_VERSION = "18"
+
+# ============================================
+# REDIRECCIONES DE MANTENIMIENTO
+# ============================================
+
 # Redirigir todo a mantenimiento
 [[redirects]]
   from = "/*"
@@ -45,13 +52,52 @@
   status = 200
   force = true
 
-# Excepción para el logo
+# Excepción para el logo (debe verse en mantenimiento)
 [[redirects]]
   from = "/wp-content/uploads/2023/11/Logo-Export-Campos-2.png"
   to = "/wp-content/uploads/2023/11/Logo-Export-Campos-2.png"
   status = 200
 
-# Redirigir .com a .cl
+# ============================================
+# RUTAS ADMINISTRATIVAS (acceso directo)
+# ============================================
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/cotizador"
+  to = "/quote.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/maintenance-admin.html"
+  status = 200
+
+# ============================================
+# HEADERS DE SEGURIDAD
+# ============================================
+
+[[headers]]
+  for = "/dashboard.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+
+# ============================================
+# REDIRECCIÓN .com → .cl
+# ============================================
+
 [[redirects]]
   from = "https://exportcampos.com/*"
   to = "https://exportcampos.cl/:splat"
